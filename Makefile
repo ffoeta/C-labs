@@ -31,11 +31,13 @@ labs     := $(foreach student,$(students),$(wildcard $(student)/??))
 
 student            = $(word 1,$(subst /, ,$(1)))
 
-lab_test_sources   = $(shell find $(1) -type f -a -name 'test-*.cpp')
-lab_sources        = $(shell find $(1) -type f -a -name '*.cpp' ! -name 'test-*.cpp')
-lab_headers        = $(shell find $(1) -type f -a -name '*.h*')
-lab_common_sources = $(if $(wildcard $(1)/common),$(shell find $(1)/common -type f -a -name '*.cpp'))
-lab_common_headers = $(if $(wildcard $(1)/common),$(shell find $(1)/common -type f -a -name '*.h*'))
+all_files          := $(shell find -type f -a \( -name '*.cpp' -o -name '*.h*' \) | sed 's%^./%%g')
+
+lab_test_sources   = $(filter $(1)/test-%.cpp,$(all_files))
+lab_sources        = $(filter-out $(1)/test-%,$(filter $(1)/%.cpp,$(all_files)))
+lab_headers        = $(filter $(1)/%.h,$(all_files)) $(filter $(1)/%.hpp,$(all_files)) $(filter $(1)/%.hxx,$(all_files))
+lab_common_sources = $(if $(wildcard $(1)/common),$(filter $(1)/common/%.cpp,$(all_files)))
+lab_common_headers = $(if $(wildcard $(1)/common),$(filter $(1)/common/%.h,$(all_files)) $(filter $(1)/common/%.hpp,$(all_files)) $(filter $(1)/common/%.hxx,$(all_files)))
 
 lab_objects        = $(patsubst %.cpp,out/%.o,$(call lab_sources,$(1)) $(call lab_common_sources,$(call student,$(1))))
 lab_test_objects   = $(patsubst %.cpp,out/%.o,$(call lab_test_sources,$(1)))
