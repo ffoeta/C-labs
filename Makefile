@@ -31,7 +31,7 @@ labs     := $(foreach student,$(students),$(wildcard $(student)/??))
 
 student            = $(word 1,$(subst /, ,$(1)))
 
-all_files          := $(shell find -type f -a \( -name '*.cpp' -o -name '*.h*' \) | sed 's%^./%%g')
+all_files          := $(shell find . -type f -a \( -name '*.cpp' -o -name '*.h*' \) | sed 's%^./%%g')
 
 lab_test_sources   = $(filter $(1)/test-%.cpp,$(all_files))
 lab_sources        = $(filter-out $(1)/test-%,$(filter $(1)/%.cpp,$(all_files)))
