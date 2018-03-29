@@ -5,15 +5,33 @@
 
 class Rectangle : public Shape
 {
+//Public methods, fucntions and variables
 public:
-  Rectangle(const rectangle_t & set_coord_size);
+
+	//Constructor of the class
+  Rectangle(const rectangle_t & set_center_coord_and_size);
+
+  //Destructor of the class
   virtual ~Rectangle() = default; 
+
+
+  //Function returning Area value
   virtual double getArea() const override;
+
+  //Function returning resctangle, sorrounding the object 
   virtual rectangle_t getFrameRect() const override;
-  virtual void move(const point_t & new_coord) override;
+
+  //Move to new coordinates
+  virtual void move(const point_t & new_center_coord) override;
+
+  //Shifting coordinates
   virtual void move(double dx, double dy) override;
+
+//Private methods, fucntions and variables  
 private:
-  rectangle_t m_coord_size;
+
+	//Rectangle's coordinates and size in one variable 
+  rectangle_t m_center_coord_and_size;
 };
 
 #endif

@@ -4,7 +4,7 @@
 
 int main()
 {
-  Circle circle1({5, 5}, 5);
+  Circle circle1({-5, 5}, 5);
   Rectangle rectangle1({{5, 5}, 10, 10});
 
   Shape * pShape;

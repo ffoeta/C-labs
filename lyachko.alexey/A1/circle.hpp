@@ -5,16 +5,38 @@
 
 class Circle : public Shape
 {
+
+//Public methods, fucntions and variables
 public:
-  Circle(const point_t & set_coord, double set_r);
+
+	//Constructor
+  Circle(const point_t & set_center_coord, double set_r);
+
+  //Destructor 
   virtual ~Circle() = default;
+
+
+  //Fucntion returning Area value
   virtual double getArea() const override;
+
+  //Fucntion returning resctangle, sorrounding the object 
   virtual rectangle_t getFrameRect()  const override;
-  virtual void move(const point_t & new_coord) override;
+
+  //Move to new coordinates
+  virtual void move(const point_t & new_center_coord) override;
+
+  //Shifting coordinates
   virtual void move(double dx, double dy) override;
+
+//Private methods, fucntions and variables
 private:
-    point_t m_coord;
-    double m_r;
+
+	//Coorinates 
+  point_t m_center_coord;
+
+  //Radius
+  double m_r;
+
 };
 
 #endif
