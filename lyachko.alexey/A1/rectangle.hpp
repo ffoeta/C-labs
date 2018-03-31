@@ -8,7 +8,7 @@ class Rectangle : public Shape
 //Public methods, fucntions and variables
 public:
 
-	//Constructor of the class
+  //Constructor of the class
   Rectangle(const rectangle_t & set_center_coord_and_size);
 
   //Destructor of the class
@@ -30,7 +30,7 @@ public:
 //Private methods, fucntions and variables  
 private:
 
-	//Rectangle's coordinates and size in one variable 
+  //Rectangle's coordinates and size in one variable 
   rectangle_t m_center_coord_and_size;
 };
 

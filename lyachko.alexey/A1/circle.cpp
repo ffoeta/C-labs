@@ -4,11 +4,11 @@
 
 Circle::Circle(const point_t & set_center_coord, double set_r): m_center_coord(set_center_coord), m_r(set_r)
 {
-	if (m_r <= 0) 
-	{
-		std::cout << "Radius must not be lower than 0"<<std::endl;
-		exit(1);
-	}
+  if (m_r <= 0) 
+  {
+    std::cout << "Radius must not be lower than 0"<<std::endl;
+    exit(1);
+  }
 }
 
 double Circle::getArea() const

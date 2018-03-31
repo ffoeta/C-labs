@@ -10,7 +10,7 @@ class Shape
 //Public methods, fucntions and variables
 public:
 
-	//Absolute virtual constructor, set to default
+  //Absolute virtual constructor, set to default
   virtual ~Shape() = default;
 
   //Absolute virtual function returning area

@@ -9,7 +9,7 @@ class Circle : public Shape
 //Public methods, fucntions and variables
 public:
 
-	//Constructor
+  //Constructor
   Circle(const point_t & set_center_coord, double set_r);
 
   //Destructor 
@@ -31,7 +31,7 @@ public:
 //Private methods, fucntions and variables
 private:
 
-	//Coorinates 
+  //Coorinates 
   point_t m_center_coord;
 
   //Radius
