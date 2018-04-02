@@ -3,15 +3,9 @@
 
 Rectangle::Rectangle(const rectangle_t & set_center_coord_and_size) : m_center_coord_and_size(set_center_coord_and_size)
 {
-  if (m_center_coord_and_size.width <= 0) 
+  if (m_center_coord_and_size.width <= 0 || m_center_coord_and_size.height <= 0) 
   {
-    std::cout << "Width must not be lower than 0";
-    exit(1);
-  };
-
-  if (m_center_coord_and_size.height <= 0) 
-  {
-    std::cout << "Height must not be lower than 0";
+    std::cout << "Height and Width must both be greater than 0";
     exit(1);
   };
 }
