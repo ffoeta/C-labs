@@ -1,7 +1,8 @@
 #include "rectangle.hpp"
 #include <iostream>
 
-Rectangle::Rectangle(const rectangle_t & set_center_coord_and_size) : m_center_coord_and_size(set_center_coord_and_size)
+Rectangle::Rectangle(const rectangle_t & set_center_coord_and_size) : 
+ m_center_coord_and_size(set_center_coord_and_size)
 {
   if (m_center_coord_and_size.width <= 0.0) 
   {

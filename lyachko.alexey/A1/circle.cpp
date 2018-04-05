@@ -2,12 +2,14 @@
 #include <math.h>
 #include <iostream>
 
-Circle::Circle(const point_t & set_center_coord, double set_r): m_center_coord(set_center_coord), m_r(set_r)
+Circle::Circle(const point_t & set_center_coord, double set_r): 
+ m_center_coord(set_center_coord), 
+ m_r(set_r)
 {
   if (m_r < 0.0) 
   {
-  std::cerr << "Radius must not be lower than 0" << std::endl;
-  m_r = 0.0;
+   std::cerr << "Radius must not be lower than 0" << std::endl;
+   m_r = 0.0;
   }
 }
 
