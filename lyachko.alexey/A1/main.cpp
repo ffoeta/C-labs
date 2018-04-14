@@ -4,8 +4,11 @@
 
 int main()
 {
-  Circle circle1({-5, 5}, 5);
-  Rectangle rectangle1({{5, 5}, 10, 10});
+  try
+  {
+
+  Circle circle1( {-5, 5}, 5 );
+  Rectangle rectangle1( { {5, 5}, 10, 10} );
 
   Shape * pShape;
   pShape = &circle1;
@@ -27,6 +30,12 @@ int main()
   std::cout << "Rectangle coordinates (shift -5 -5): " << pShape->getFrameRect().pos.x << " " << pShape->getFrameRect().pos.y << std::endl;
   pShape->move({6, 6});
   std::cout << "Rectangle coordinates (moved to 6 6): " << pShape->getFrameRect().pos.x << " " << pShape->getFrameRect().pos.y << std::endl;
+
+  } catch ( std::invalid_argument & smth ) 
+  {
+    std::cerr << smth.what() << std::endl;
+    return 1; 
+  }
 
   return 0;
 }

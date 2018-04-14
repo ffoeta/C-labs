@@ -8,8 +8,7 @@ Circle::Circle(const point_t & set_center_coord, double set_r):
 {
   if (m_r < 0.0) 
   {
-   std::cerr << "Radius must not be lower than 0" << std::endl;
-   m_r = 0.0;
+   throw std::invalid_argument("Radius must be greater than 0");
   }
 }
 
