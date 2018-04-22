@@ -11,6 +11,8 @@ class Shape
 //Public methods, fucntions and variables
 public:
 
+  virtual ~Shape() = default;
+
   //Pure virtual function returning area
   virtual double getArea() const = 0;
 
