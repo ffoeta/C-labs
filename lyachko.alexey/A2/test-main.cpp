@@ -4,7 +4,7 @@
 #include "circle.hpp"
 #include "rectangle.hpp"
 
-#define EPSILON (0.0001)
+const double EPSILON = 0.0001;
 
 
 BOOST_AUTO_TEST_SUITE(Rectangle_test)

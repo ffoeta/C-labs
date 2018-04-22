@@ -3,36 +3,25 @@
 
 #include "shape.hpp"
 
-namespace lyachko {
+namespace lyachko
+{
 
   class Rectangle : public Shape
   {
-  //Public methods, fucntions and variables
+
   public:
 
-  	//Constructor of the class
     Rectangle(const rectangle_t & new_center);
-
-    //Function returning Area value
     virtual double getArea() const override;
-
-    //Function returning resctangle, sorrounding the object 
     virtual rectangle_t getFrameRect() const override;
-
-    //Move to new coordinates
     virtual void move(const point_t & new_center) override;
-
-    //Shifting coordinates
     virtual void move(double dx, double dy) override;
-
-    //Method changing size of the object
     virtual void scale(double scale_coef) override;
 
-  //Private methods, fucntions and variables  
   private:
 
-  	//Rectangle's coordinates and size in one variable 
     rectangle_t m_rectangle;
+    
   };
 
 }
