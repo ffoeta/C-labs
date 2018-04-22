@@ -1,10 +1,10 @@
 #include "rectangle.hpp"
 #include <iostream>
 
-Rectangle::Rectangle(const rectangle_t & set_center_coord_and_size) : 
- m_center_coord_and_size(set_center_coord_and_size)
+Rectangle::Rectangle(const rectangle_t & new_center) : 
+ m_rectangle(new_center)
 {
-  if (m_center_coord_and_size.width <= 0.0 || m_center_coord_and_size.height <= 0.0)
+  if ((m_rectangle.width <= 0.0) || (m_rectangle.height <= 0.0))
   {
     throw std::invalid_argument("Height and Width must be greater than 0");
   }
@@ -12,21 +12,21 @@ Rectangle::Rectangle(const rectangle_t & set_center_coord_and_size) :
 
 double Rectangle::getArea() const
 {
-  return m_center_coord_and_size.width * m_center_coord_and_size.height;
+  return m_rectangle.width * m_rectangle.height;
 }
 
 rectangle_t Rectangle::getFrameRect() const
 {
-  return m_center_coord_and_size;
+  return m_rectangle;
 }
 
 void Rectangle::move(double dx, double dy)
 {
-  m_center_coord_and_size.pos.x += dx;
-  m_center_coord_and_size.pos.y += dy;
+  m_rectangle.pos.x += dx;
+  m_rectangle.pos.y += dy;
 }
 
 void Rectangle::move(const point_t & new_cord)
 {
-  m_center_coord_and_size.pos = new_cord;
+  m_rectangle.pos = new_cord;
 }
