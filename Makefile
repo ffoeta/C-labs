@@ -15,7 +15,7 @@ CXXFLAGS += -g
 system   := $(shell uname)
 
 ifneq 'MINGW' '$(patsubst MINGW%,MINGW,$(system))'
-CPPFLAGS += -std=c++11
+CPPFLAGS += -std=c++14
 else
 CPPFLAGS += -std=gnu++14
 endif
@@ -76,7 +76,7 @@ out/%/test-lab: $$(call lab_test_objects,%) $$(call lab_objects,%) | $$(@D)/.dir
 
 $(test_objects): out/%.o: %.cpp | $$(@D)/.dir
 	$(if $(SILENT),,@echo [C++ ] $<)
-	$(hidecmd)$(CXX) $(CPPFLAGS) $(CXXFLAGS) -MMD -MP -c $(call common_include,$<) -o $@ $<
+	$(hidecmd)$(CXX) $(CPPFLAGS) $(CXXFLAGS) -Wno-old-style-cast -Wno-unused-parameter -MMD -MP -c $(call common_include,$<) -o $@ $<
 
 $(objects): out/%.o: %.cpp | $$(@D)/.dir
 	$(if $(SILENT),,@echo [C++ ] $<)
