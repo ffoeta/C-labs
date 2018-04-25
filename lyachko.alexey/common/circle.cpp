@@ -2,7 +2,8 @@
 #include <math.h>
 #include <iostream>
 
-namespace lyachko {
+namespace lyachko
+{
 
 	Circle::Circle(const point_t & new_center, double new_r): 
    m_center(new_center), 
