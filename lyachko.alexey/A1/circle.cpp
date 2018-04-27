@@ -1,6 +1,6 @@
 #include "circle.hpp"
 #include <math.h>
-#include <iostream>
+#include <stdexcept>
 
 
 Circle::Circle(const point_t & new_center, double new_r): 

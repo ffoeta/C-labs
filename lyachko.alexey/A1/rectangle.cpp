@@ -1,5 +1,5 @@
 #include "rectangle.hpp"
-#include <iostream>
+#include <stdexcept>
 
 Rectangle::Rectangle(const rectangle_t & new_center) : 
  m_rectangle(new_center)
