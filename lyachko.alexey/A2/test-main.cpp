@@ -7,7 +7,7 @@
 const double EPSILON = 0.0001;
 
 
-BOOST_AUTO_TEST_SUITE(Rectangle_test)
+BOOST_AUTO_TEST_SUITE(rectangle_test)
 
 BOOST_AUTO_TEST_CASE(Invalid_Width_Argument)
 {
@@ -29,7 +29,7 @@ BOOST_AUTO_TEST_CASE(MoveTo)
 {
   lyachko::Rectangle rectangle_{ { {1.0, 1.0}, 1.5, 1.5 } };
   double r_original_area = rectangle_.getArea();
-  point_t r_altered_point = {10.0, 10.0};
+  lyachko::point_t r_altered_point = {10.0, 10.0};
   rectangle_.move(r_altered_point);
 
   BOOST_CHECK_CLOSE_FRACTION(r_original_area, rectangle_.getArea(), EPSILON);
@@ -43,7 +43,7 @@ BOOST_AUTO_TEST_CASE(ShiftDxDy)
 {
   lyachko::Rectangle rectangle_{ { {1.0, 1.0}, 1.5, 1.5 }};
   double r_original_area = rectangle_.getArea();
-  point_t r_altered_point = {10.0, 10.0};
+  lyachko::point_t r_altered_point = {10.0, 10.0};
   rectangle_.move(9.0, 9.0);
 
   BOOST_CHECK_CLOSE_FRACTION(rectangle_.getArea(), r_original_area, EPSILON);
@@ -80,9 +80,9 @@ BOOST_AUTO_TEST_CASE(Invalid_Scale_Argument)
 BOOST_AUTO_TEST_CASE(MoveTo)
 {
   lyachko::Circle circle_{ {1.0, 1.0}, 5.0 };
-  rectangle_t c_original_frame = circle_.getFrameRect();
+  lyachko::rectangle_t c_original_frame = circle_.getFrameRect();
   double c_original_area = circle_.getArea();
-  point_t c_altered_point = {10.0, 10.0};
+  lyachko::point_t c_altered_point = {10.0, 10.0};
   circle_.move(c_altered_point);
   
   BOOST_CHECK_CLOSE_FRACTION(c_original_area, circle_.getArea(), EPSILON);
@@ -95,9 +95,9 @@ BOOST_AUTO_TEST_CASE(MoveTo)
 BOOST_AUTO_TEST_CASE(ShiftDxDy)
 {
   lyachko::Circle circle_{ {1.0, 1.0}, 5.0 };
-  rectangle_t c_original_frame = circle_.getFrameRect();
+  lyachko::rectangle_t c_original_frame = circle_.getFrameRect();
   double c_original_area = circle_.getArea();
-  point_t c_altered_point = {10.0, 10.0};
+  lyachko::point_t c_altered_point = {10.0, 10.0};
   circle_.move(9.0, 9.0);
 
   BOOST_CHECK_CLOSE_FRACTION(c_altered_point.x, circle_.getFrameRect().pos.x, EPSILON);
