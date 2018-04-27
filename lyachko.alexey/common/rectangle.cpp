@@ -1,5 +1,5 @@
 #include "rectangle.hpp"
-#include <iostream>
+#include <stdexcept>
 
 namespace lyachko
 {

@@ -1,6 +1,6 @@
 #include "circle.hpp"
 #include <math.h>
-#include <iostream>
+#include <stdexcept>
 
 namespace lyachko
 {
