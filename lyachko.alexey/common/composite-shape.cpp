@@ -150,7 +150,10 @@ namespace lyachko
         new_y = y0 - abs( ( m_shapelist[i]->getFrameRect().pos.y -  y0 ) * scale_coef );
       }
 
-      m_shapelist[i]->move( { new_x, new_y } );
+      if ( (x0 != m_shapelist[i]->getFrameRect().pos.x) && (y0 != m_shapelist[i]->getFrameRect().pos.y) )
+      {
+        m_shapelist[i]->move( { new_x, new_y } );
+      }
       m_shapelist[i]->scale( scale_coef ); 
     }
   }
