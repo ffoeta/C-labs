@@ -1,5 +1,6 @@
 #include "composite-shape.hpp"
 #include <stdexcept>
+#include <math.h>
 namespace lyachko
 {
 
@@ -125,26 +126,31 @@ namespace lyachko
       throw std::invalid_argument( "scale_coeff mustn't be lower than 0" );
     }
 
+    double x0 = getFrameRect().pos.x;
+    double y0 = getFrameRect().pos.y;
+
     for ( int i = 0; i < m_size; i++ )
     {
-      int dx = 0.0;
-      int dy = 0.0;
-      if ( m_shapelist[i]->getFrameRect().pos.x > getFrameRect().pos.x )
+      double new_x = 0.0;
+      double new_y = 0.0;
+
+      if ( m_shapelist[i]->getFrameRect().pos.x > x0 )
       {
-        dx = m_shapelist[i]->getFrameRect().pos.x * scale_coef - m_shapelist[i]->getFrameRect().pos.x;
-      }else if ( m_shapelist[i]->getFrameRect().pos.x < getFrameRect().pos.x )
+        new_x = x0 + abs( ( m_shapelist[i]->getFrameRect().pos.x -  x0 ) * scale_coef );
+      }else if ( m_shapelist[i]->getFrameRect().pos.x < x0 )
       {
-        dx = m_shapelist[i]->getFrameRect().pos.x - m_shapelist[i]->getFrameRect().pos.x * scale_coef;
-      }
-      if ( m_shapelist[i]->getFrameRect().pos.y > getFrameRect().pos.y )
-      {
-        dy = m_shapelist[i]->getFrameRect().pos.y * scale_coef - m_shapelist[i]->getFrameRect().pos.y;
-      }else if ( m_shapelist[i]->getFrameRect().pos.y < getFrameRect().pos.y )
-      {
-        dy = m_shapelist[i]->getFrameRect().pos.y - m_shapelist[i]->getFrameRect().pos.y * scale_coef;
+        new_x = x0 - abs( ( m_shapelist[i]->getFrameRect().pos.x -  x0 ) * scale_coef );
       }
 
-      m_shapelist[i]->move( dx, dy );
+      if ( m_shapelist[i]->getFrameRect().pos.y > y0 )
+      {
+        new_y = y0 + abs( ( m_shapelist[i]->getFrameRect().pos.y -  y0 ) * scale_coef );
+      }else if ( m_shapelist[i]->getFrameRect().pos.y < y0 )
+      {
+        new_y = y0 - abs( ( m_shapelist[i]->getFrameRect().pos.y -  y0 ) * scale_coef );
+      }
+
+      m_shapelist[i]->move( { new_x, new_y } );
       m_shapelist[i]->scale( scale_coef ); 
     }
   }
