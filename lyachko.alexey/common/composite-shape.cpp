@@ -84,6 +84,23 @@ namespace lyachko
     shapelist_.swap(temp__);
   }
 
+  void CompositeShape::add( const CompositeShape & shape )
+  {
+    
+    std::unique_ptr <std::shared_ptr<Shape>[]> temp__(new std::shared_ptr<Shape>[size_ + 1]);
+    CompositeShape temp_cmp = shape;
+    std::shared_ptr <Shape> temp___( new CompositeShape(shape) );
+  
+    for (size_t i = 0; i < size_; i++)
+    {
+      temp__[i] = shapelist_[i];
+    }
+    
+    temp__[size_] = temp___;
+    size_++;
+    shapelist_.swap(temp__);
+  }
+
   double CompositeShape::getArea() const noexcept
   {
     double area = 0.0;

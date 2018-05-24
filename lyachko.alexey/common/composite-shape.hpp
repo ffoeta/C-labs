@@ -32,6 +32,7 @@ namespace lyachko
 
     void remove( size_t index );
     void add( const std::shared_ptr<Shape> & shape );
+    void add( const CompositeShape & shape );
 
   private:
 

@@ -15,17 +15,20 @@ int main()
     std::shared_ptr<lyachko::Shape> rectangle4(new lyachko::Rectangle({{1,1},2,2}));
 
     lyachko::CompositeShape compositeshape;
+    lyachko::CompositeShape compositeshape1;
     std::shared_ptr<lyachko::Matrix> matrix;
 
-    compositeshape.add(rectangle1);
-    compositeshape.add(rectangle2); 
-    compositeshape.add(rectangle3); 
+    compositeshape1.add(rectangle1);
+    compositeshape1.add(rectangle2); 
+    compositeshape1.add(rectangle3); 
+
+    compositeshape.add(compositeshape1);
     compositeshape.add(rectangle4); 
 
     std::cout<<compositeshape.getFrameRect().width<<std::endl;
     std::cout<<compositeshape.getFrameRect().height<<std::endl;
 
-    matrix = compositeshape.getMatrix(); //matrix is ok
+    matrix = compositeshape1.getMatrix(); //matrix is ok
     matrix->info();
 
     compositeshape.rotate(45);
