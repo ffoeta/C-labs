@@ -18,11 +18,13 @@ namespace lyachko
     virtual void move(const point_t & new_center) override;
     virtual void move(double dx, double dy) override;
     virtual void scale(double scale_coef) override;
+    virtual void rotate(double angle) override;
 
   private:
 
-    point_t m_center;
-    double m_r;
+    point_t center_;
+    double r_;
+    double angle_;
 
   };
 

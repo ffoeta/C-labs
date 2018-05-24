@@ -28,10 +28,10 @@ public:
 private:
 
   //Coorinates 
-  point_t m_center;
+  point_t center_;
 
   //Radius
-  double m_r;
+  double r_;
 
 };
 

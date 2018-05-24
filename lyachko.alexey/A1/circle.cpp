@@ -4,10 +4,10 @@
 
 
 Circle::Circle(const point_t & new_center, double new_r): 
- m_center(new_center), 
- m_r(new_r)
+ center_(new_center), 
+ r_(new_r)
 {
-  if (m_r < 0.0) 
+  if (r_ < 0.0) 
   {
     throw std::invalid_argument("Radius must be greater than 0");
   }
@@ -15,21 +15,21 @@ Circle::Circle(const point_t & new_center, double new_r):
 
 double Circle::getArea() const
 {   
-  return double(M_PI * m_r * m_r);
+  return double(M_PI * r_ * r_);
 }
 
 rectangle_t Circle::getFrameRect() const
 {
-  return {m_center, m_r * 2, m_r * 2};
+  return {center_, r_ * 2, r_ * 2};
 }
 
 void Circle::move(double dx, double dy)
 {
-  m_center.x += dx;
-  m_center.y += dy;
+  center_.x += dx;
+  center_.y += dy;
 }
 
 void Circle::move(const point_t & new_center)
 {
-  m_center = new_center;
+  center_ = new_center;
 }

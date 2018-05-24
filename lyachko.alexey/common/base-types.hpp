@@ -13,8 +13,10 @@ namespace lyachko
   {
     point_t pos;
     double width, height;
+    bool cross( const rectangle_t & rectangle );
+
   };
   
 }
 
-#endif 
+#endif

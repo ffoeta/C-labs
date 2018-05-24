@@ -2,9 +2,9 @@
 #include <stdexcept>
 
 Rectangle::Rectangle(const rectangle_t & new_center) : 
- m_rectangle(new_center)
+ rectangle_(new_center)
 {
-  if ((m_rectangle.width <= 0.0) || (m_rectangle.height <= 0.0))
+  if ((rectangle_.width <= 0.0) || (rectangle_.height <= 0.0))
   {
     throw std::invalid_argument("Height and Width must be greater than 0");
   }
@@ -12,21 +12,21 @@ Rectangle::Rectangle(const rectangle_t & new_center) :
 
 double Rectangle::getArea() const
 {
-  return m_rectangle.width * m_rectangle.height;
+  return rectangle_.width * rectangle_.height;
 }
 
 rectangle_t Rectangle::getFrameRect() const
 {
-  return m_rectangle;
+  return rectangle_;
 }
 
 void Rectangle::move(double dx, double dy)
 {
-  m_rectangle.pos.x += dx;
-  m_rectangle.pos.y += dy;
+  rectangle_.pos.x += dx;
+  rectangle_.pos.y += dy;
 }
 
 void Rectangle::move(const point_t & new_cord)
 {
-  m_rectangle.pos = new_cord;
+  rectangle_.pos = new_cord;
 }

@@ -3,6 +3,7 @@
 
 #include "shape.hpp"
 #include <memory>
+#include "matrix.hpp"
 
 namespace lyachko
 {
@@ -12,25 +13,33 @@ namespace lyachko
 
   public:
 
-    CompositeShape( Shape * new_shape );
+    CompositeShape();
+    CompositeShape( const std::shared_ptr<Shape> &shape );
     CompositeShape( const CompositeShape & new_cmp );
-    CompositeShape & operator=(const CompositeShape & new_cmp);
+    CompositeShape( CompositeShape && new_cmp );
+
+    CompositeShape & operator=( const CompositeShape & new_cmp );
+    CompositeShape & operator=( CompositeShape && new_cmp );
 
     virtual double getArea() const noexcept override;
     virtual rectangle_t getFrameRect() const noexcept override;
-    virtual void move(const point_t & new_center) noexcept override;
-    virtual void move(double dx, double dy) noexcept override;
-    virtual void scale(double scale_coef) override;
+    virtual void move( const point_t & new_center ) noexcept override;
+    virtual void move( double dx, double dy ) noexcept override;
+    virtual void scale(double scale_coef ) override;
+    virtual void rotate(double angle ) override;
+    std::shared_ptr<Matrix> getMatrix();
 
-    void remove( int index );
-    void add( Shape * new_shape );
+
+    void remove( size_t index );
+    void add( const std::shared_ptr<Shape> & shape );
 
   private:
 
-    std::unique_ptr<Shape * []> m_shapelist;
-    int m_size;
+    std::unique_ptr <std::shared_ptr<Shape>[]> shapelist_;
+    size_t size_;
 
   };
+
 }
 
 #endif 

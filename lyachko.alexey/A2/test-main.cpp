@@ -7,7 +7,7 @@
 const double EPSILON = 0.0001;
 
 
-BOOST_AUTO_TEST_SUITE(rectangle_test)
+BOOST_AUTO_TEST_SUITE(A2_test)
 
 BOOST_AUTO_TEST_CASE(Invalid_Width_Argument)
 {

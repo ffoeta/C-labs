@@ -28,7 +28,7 @@ public:
   private:
 
   //Rectangle's coordinates and size in one variable 
-  rectangle_t m_rectangle;
+  rectangle_t rectangle_;
 
 };
 

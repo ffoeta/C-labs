@@ -17,6 +17,7 @@ namespace lyachko
     virtual void move(const point_t & new_center) = 0;
     virtual void move(double dx, double dy) = 0;
     virtual void scale(double scale_coef) = 0;
+    virtual void rotate(double angle) = 0;
 
   };
 
