@@ -95,21 +95,45 @@ namespace lyachko
   }
 
   rectangle_t CompositeShape::getFrameRect() const noexcept
-  { 
-    double xleft = shapelist_[0]->getFrameRect().pos.x - shapelist_[0]->getFrameRect().width/2;
-    double xright = shapelist_[0]->getFrameRect().pos.x + shapelist_[0]->getFrameRect().width/2;
-    double ytop = shapelist_[0]->getFrameRect().pos.x + shapelist_[0]->getFrameRect().height/2;
-    double ybottom = shapelist_[0]->getFrameRect().pos.x - shapelist_[0]->getFrameRect().height/2;
+  {
+    rectangle_t rect__ = shapelist_[0]->getFrameRect();
 
-    for ( size_t i = 0; i < size_; i++ )
+    double top_left_x = rect__.pos.x - rect__.width / 2;
+    double top_left_y = rect__.pos.y + rect__.height / 2;
+    double bottom_right_x = rect__.pos.x + rect__.width / 2;
+    double bottom_right_y = rect__.pos.y - rect__.height / 2;
+    point_t top_left = {top_left_x, top_left_y};
+    point_t bottom_right = {bottom_right_x, bottom_right_y};
+
+    for (size_t i = 1; i < size_; i++)
     {
-      xright = std::fmax( xright, shapelist_[i]->getFrameRect().pos.x + shapelist_[i]->getFrameRect().width/2 );
-      xleft = std::fmin( xleft, shapelist_[i]->getFrameRect().pos.x - shapelist_[i]->getFrameRect().width/2 );
-      ytop = std::fmax( ytop, shapelist_[i]->getFrameRect().pos.y + shapelist_[i]->getFrameRect().height/2 );
-      ybottom = std::fmin( ybottom, shapelist_[i]->getFrameRect().pos.y - shapelist_[i]->getFrameRect().height/2 );
-    }
+      rect__ = shapelist_[i]->getFrameRect();
+      top_left_x = rect__.pos.x - rect__.width / 2;
+      top_left_y = rect__.pos.y + rect__.height / 2;
+      bottom_right_x = rect__.pos.x + rect__.width / 2;
+      bottom_right_y = rect__.pos.y - rect__.height / 2;
 
-    return { { xleft + ( xright - xleft )/2 , ybottom + ( ytop - ybottom )/2 }, ( xright - xleft ), ( ytop - ybottom ) };
+      if (top_left_x < top_left.x)
+      {
+        top_left.x = top_left_x;
+      }
+      
+      if (top_left_y > top_left.y)
+      {
+        top_left.y = top_left_y;
+      }
+
+      if (bottom_right_x > bottom_right.x)
+      {
+        bottom_right.x = bottom_right_x;
+      }
+      
+      if (bottom_right_y < bottom_right.y)
+      {
+        bottom_right.y = bottom_right_y;
+      }
+    }
+    return { { (top_left.x + bottom_right.x) / 2, (top_left.y + bottom_right.y) / 2 }, bottom_right.x - top_left.x, top_left.y - bottom_right.y};
   }
 
   void CompositeShape::move( const lyachko::point_t & new_center ) noexcept
