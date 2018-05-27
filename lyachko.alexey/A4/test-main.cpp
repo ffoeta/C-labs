@@ -116,13 +116,12 @@ BOOST_AUTO_TEST_SUITE( A4_Matrix )
     compositeshape.add( rectangle3 );
     compositeshape.add( rectangle4 );
 
-    size_t desired_layers = 2;
-    size_t desired_size = 3;
-
     matrix = compositeshape.getMatrix();
 
-    BOOST_CHECK_EQUAL( matrix->infolayers(), desired_layers);
-    BOOST_CHECK_EQUAL( matrix->infomaxsize(), desired_size);
+    BOOST_REQUIRE(matrix.get()->getElement( 1, 1 ) == rectangle1 );
+    BOOST_REQUIRE(matrix.get()->getElement( 2, 1 ) == rectangle2 );
+    BOOST_REQUIRE(matrix.get()->getElement( 1, 2 ) == rectangle3 );
+    BOOST_REQUIRE(matrix.get()->getElement( 1, 3 ) == rectangle4 );
 
   }
 
@@ -137,23 +136,17 @@ BOOST_AUTO_TEST_SUITE( A4_Matrix )
     compositeshape.add( rectangle1 );
     compositeshape.add( rectangle2 );
 
-    size_t desired_layers = 2;
-    size_t desired_size = 1;
-
     matrix = compositeshape.getMatrix();
 
-    BOOST_CHECK_EQUAL( matrix->infolayers(), desired_layers );
-    BOOST_CHECK_EQUAL( matrix->infomaxsize(), desired_size );
+    BOOST_REQUIRE(matrix.get()->getElement( 1, 1 ) == rectangle1 );
+    BOOST_REQUIRE(matrix.get()->getElement( 2, 1 ) == rectangle2 );
 
     rectangle2->rotate( 90 );
 
-    desired_layers = 1;
-    desired_size = 2;
-
     matrix = compositeshape.getMatrix();
 
-    BOOST_CHECK_EQUAL( matrix->infolayers(), desired_layers );
-    BOOST_CHECK_EQUAL( matrix->infomaxsize(), desired_size );
+    BOOST_REQUIRE(matrix.get()->getElement( 1, 1 ) == rectangle1 );
+    BOOST_REQUIRE(matrix.get()->getElement( 1, 2 ) == rectangle2 );
   }
 
   BOOST_AUTO_TEST_CASE( CMP_Matrix_and_Shifting )
@@ -174,8 +167,8 @@ BOOST_AUTO_TEST_SUITE( A4_Matrix )
 
     matrix2 = compositeshape.getMatrix();
 
-    BOOST_CHECK_EQUAL( matrix1->infolayers(), matrix2->infolayers() );
-    BOOST_CHECK_EQUAL( matrix1->infomaxsize(), matrix2->infomaxsize() );
+    BOOST_REQUIRE(matrix2.get()->getElement( 1, 1 ) == rectangle1 );
+    BOOST_REQUIRE(matrix2.get()->getElement( 2, 1 ) == rectangle2 );
   }
 
   BOOST_AUTO_TEST_CASE( CMP_Matrix_and_MovingTO )
@@ -196,8 +189,8 @@ BOOST_AUTO_TEST_SUITE( A4_Matrix )
 
     matrix2 = compositeshape.getMatrix();
 
-    BOOST_CHECK_EQUAL( matrix1->infolayers(), matrix2->infolayers() );
-    BOOST_CHECK_EQUAL( matrix1->infomaxsize(), matrix2->infomaxsize() );
+    BOOST_REQUIRE(matrix2.get()->getElement( 1, 1 ) == rectangle1 );
+    BOOST_REQUIRE(matrix2.get()->getElement( 2, 1 ) == rectangle2 );
   }
 
   BOOST_AUTO_TEST_CASE( RECT_Matrix_and_Shifting )
@@ -218,8 +211,8 @@ BOOST_AUTO_TEST_SUITE( A4_Matrix )
 
     matrix2 = compositeshape.getMatrix();
 
-    BOOST_CHECK_EQUAL( matrix1->infolayers(), matrix2->infomaxsize() );
-    BOOST_CHECK_EQUAL( matrix1->infomaxsize(), matrix2->infolayers() );
+    BOOST_REQUIRE(matrix2.get()->getElement( 1, 1 ) == rectangle1 );
+    BOOST_REQUIRE(matrix2.get()->getElement( 1, 2 ) == rectangle2 );
   }
 
   BOOST_AUTO_TEST_CASE( RECT_Matrix_and_MovingTo )
@@ -240,8 +233,31 @@ BOOST_AUTO_TEST_SUITE( A4_Matrix )
 
     matrix2 = compositeshape.getMatrix();
 
-    BOOST_CHECK_EQUAL( matrix1->infolayers(), matrix2->infomaxsize() );
-    BOOST_CHECK_EQUAL( matrix1->infomaxsize(), matrix2->infolayers() );
+  }
+
+  BOOST_AUTO_TEST_CASE( Matrix_Check )
+  {
+    std::shared_ptr<lyachko::Shape> rectangle1(new lyachko::Rectangle( { { 1, 1 }, 1, 1 } ) );
+    std::shared_ptr<lyachko::Shape> circle2( new lyachko::Circle( { 9, 9 }, 2 ) );
+    std::shared_ptr<lyachko::Shape> rectangle3( new lyachko::Rectangle( { { 1, 1 },2,2} ) );
+    std::shared_ptr<lyachko::Shape> circle4( new lyachko::Circle( { -9, -9 }, 2) );
+
+    lyachko::CompositeShape compositeshape;
+    std::shared_ptr<lyachko::Matrix> matrix;
+    lyachko::CompositeShape compositeshape1( circle2 );
+    std::shared_ptr<lyachko::Shape> compositeshape2( new lyachko::CompositeShape( compositeshape1 ) );
+
+    compositeshape.add(rectangle1);
+    compositeshape.add(compositeshape2);
+    compositeshape.add(rectangle3);
+    compositeshape.add(circle4);
+
+    matrix = compositeshape.getMatrix();
+
+    BOOST_REQUIRE( matrix.get()->getElement( 1, 1 ) == rectangle1 );
+    BOOST_REQUIRE( matrix.get()->getElement( 1, 2 ) == compositeshape2 );
+    BOOST_REQUIRE( matrix.get()->getElement( 1, 3 ) == circle4 );
+    BOOST_REQUIRE( matrix.get()->getElement( 2, 1 ) == rectangle3 );
   }
 
 BOOST_AUTO_TEST_SUITE_END()

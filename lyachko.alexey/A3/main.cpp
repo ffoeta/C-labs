@@ -17,14 +17,29 @@ int main()
 
     compositeshape.add( rectangle2 );
 
-    std::cout<<compositeshape.getFrameRect().pos.x<<std::endl;
-    std::cout<<compositeshape.getFrameRect().pos.y<<std::endl;
-    std::cout<<compositeshape.getFrameRect().width<<std::endl;
-    std::cout<<compositeshape.getFrameRect().height<<std::endl;
+    std::cout << compositeshape.getFrameRect().pos.x << std::endl;
+    std::cout << compositeshape.getFrameRect().pos.y << std::endl;
+    std::cout << compositeshape.getFrameRect().width << std::endl;
+    std::cout << compositeshape.getFrameRect().height << std::endl;
+
+    compositeshape.move( { 10, 10 } );
+
+    std::cout << compositeshape.getFrameRect().pos.x << std::endl;
+    std::cout << compositeshape.getFrameRect().pos.y << std::endl;
+    std::cout << compositeshape.getFrameRect().width << std::endl;
+    std::cout << compositeshape.getFrameRect().height << std::endl;
+
+    compositeshape.move( -1, 1 );
+
+    std::cout << compositeshape.getFrameRect().pos.x << std::endl;
+    std::cout << compositeshape.getFrameRect().pos.y << std::endl;
+    std::cout << compositeshape.getFrameRect().width << std::endl;
+    std::cout << compositeshape.getFrameRect().height << std::endl;
+
   
   } catch ( std::invalid_argument & smth ) 
   {
-    std::cerr << smth.what() << std::endl;
+    std::cerr  <<  smth.what()  <<  std::endl;
     return 1; 
   }
   return 0;

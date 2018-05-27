@@ -1,5 +1,5 @@
 #include "composite-shape.hpp"
-#include <stdexcept>
+#include <iostream>
 #include <cmath>
 namespace lyachko
 {
@@ -39,7 +39,6 @@ namespace lyachko
     new_cmp.size_ = 0;
   }
 
-
   CompositeShape & CompositeShape::operator=(const CompositeShape & new_cmp)
   {
     if( this == &new_cmp )
@@ -63,7 +62,6 @@ namespace lyachko
     new_cmp.size_ = 0;
     return *this;
   }
-
 
   void CompositeShape::add( const std::shared_ptr<Shape> & shape )
   {
@@ -252,7 +250,7 @@ namespace lyachko
       shapelist_[i]->rotate( angle );
     }
   }
-  std::shared_ptr<Matrix> CompositeShape::getMatrix()
+  std::shared_ptr<Matrix> CompositeShape::getMatrix() const
   {
     std::unique_ptr <std::shared_ptr<Shape>[]> temp__( new std::shared_ptr<Shape>[size_ + 1] );
     for ( size_t i = 0; i < size_; i++ )
@@ -263,4 +261,15 @@ namespace lyachko
     
     return tempm__;
   }
+
+  std::shared_ptr<Shape> CompositeShape::operator[]( const size_t index ) const
+  {
+    if ( index > size_ )
+    {
+      throw std::invalid_argument("Index if out of range");
+    }
+
+    return shapelist_[index];
+  }
+
 }

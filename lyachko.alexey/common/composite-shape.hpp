@@ -27,8 +27,8 @@ namespace lyachko
     virtual void move( double dx, double dy ) noexcept override;
     virtual void scale(double scale_coef ) override;
     virtual void rotate(double angle ) override;
-    std::shared_ptr<Matrix> getMatrix();
-
+    std::shared_ptr<Matrix> getMatrix() const;
+    std::shared_ptr<Shape> operator[]( const size_t index ) const;
 
     void remove( size_t index );
     void add( const std::shared_ptr<Shape> & shape );

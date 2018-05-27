@@ -155,45 +155,40 @@ namespace lyachko
   
   void Matrix::info() const noexcept
   {
-    for ( size_t i = 0; i < lsize_*2; i++ )
-    {
-      std::cout<<'-';
-    }
-    std::cout<<std::endl;
-    std::cout<<"Layers: "<<nlayers_<<std::endl;
-    std::cout<<"Max size: "<<lsize_<<std::endl;
+
+    std::cout << std::endl;
+    std::cout << "Layers: " << nlayers_ << std::endl;
+    std::cout << "Max size: " << lsize_ << std::endl;
 
     for ( size_t i = 0; i < lsize_*nlayers_; i++ )
     {
       if ((layers_[i] == nullptr))
       {
-        std::cout<<"* ";
+        std::cout << "* ";
       }else
       {
-        std::cout<<"x ";
+        std::cout << "x ";
       }
       if ( ((i+1) % lsize_) == 0 )
       {
-        std::cout<<std::endl;
+        std::cout << std::endl;
       }
     }
     for ( size_t i = 0; i < lsize_*2; i++ )
     {
-      std::cout<<'-';
+      std::cout << '-';
     }
-    std::cout<<std::endl;
-
+    std::cout << std::endl;
   }
 
-  size_t Matrix::infolayers() const noexcept
+  std::shared_ptr<lyachko::Shape> Matrix::getElement( const size_t index1, const size_t index2 ) const
   {
-    return nlayers_;
-  }
+    if ( ( index1  > nlayers_ ) || ( index2 > lsize_ ) )
+    {
+      throw std::invalid_argument("index if out of range");
+    }
 
-  size_t Matrix::infomaxsize() const noexcept
-  {
-    return lsize_;
+    return layers_[lsize_*index1 - (lsize_ - index2) - 1];
   }
-
 
 }

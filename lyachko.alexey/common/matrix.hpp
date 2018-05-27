@@ -16,13 +16,13 @@ namespace lyachko
     Matrix( Matrix && matrix );
     Matrix & operator=( const Matrix & matrix );
     Matrix & operator=( Matrix && matrix );
+    std::unique_ptr<std::shared_ptr<lyachko::Shape>[]>::pointer operator[]( const size_t index ) const;
+    std::shared_ptr<lyachko::Shape> getElement( const size_t index1, const size_t index2 ) const;
     void info() const noexcept;
-    size_t infolayers() const noexcept;
-    size_t infomaxsize() const noexcept;
 
   private:
     
-    std::unique_ptr< std::shared_ptr<Shape>[] > layers_;
+    std::unique_ptr< std::shared_ptr<lyachko::Shape>[] > layers_;
     size_t lsize_;
     size_t nlayers_;
 
