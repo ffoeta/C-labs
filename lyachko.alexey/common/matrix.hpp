@@ -16,7 +16,6 @@ namespace lyachko
     Matrix( Matrix && matrix );
     Matrix & operator=( const Matrix & matrix );
     Matrix & operator=( Matrix && matrix );
-    std::unique_ptr<std::shared_ptr<lyachko::Shape>[]>::pointer operator[]( const size_t index ) const;
     std::shared_ptr<lyachko::Shape> getElement( const size_t index1, const size_t index2 ) const;
     void info() const noexcept;
 
