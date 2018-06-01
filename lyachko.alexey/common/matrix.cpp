@@ -24,8 +24,6 @@ namespace lyachko
   Matrix::Matrix( Matrix && matrix ) :
    layers_( std::move( matrix.layers_ ) ), lsize_(matrix.lsize_), nlayers_(matrix.nlayers_)
   {
-    matrix.lsize_ = 0;
-    matrix.nlayers_ = 0;
   }
 
   Matrix & Matrix::operator=( const Matrix & matrix )
@@ -40,6 +38,8 @@ namespace lyachko
       temp__[i] = matrix.layers_[i];
     }
     this->layers_.swap(temp__);
+    this->lsize_ = matrix.lsize_;
+    this->nlayers_ = matrix.nlayers_;
 
     return * this;
   }
@@ -160,23 +160,34 @@ namespace lyachko
     std::cout << "Layers: " << nlayers_ << std::endl;
     std::cout << "Max size: " << lsize_ << std::endl;
 
-    for ( size_t i = 0; i < lsize_*nlayers_; i++ )
+    // for ( size_t i = 0; i < lsize_*nlayers_; i++ )
+    // {
+    //   if ((layers_[i] == nullptr))
+    //   {
+    //     std::cout << "* ";
+    //   }else
+    //   {
+    //     std::cout << "x ";
+    //   }
+    //   if ( ((i+1) % lsize_) == 0 )
+    //   {
+    //     std::cout << std::endl;
+    //   }
+    // }
+    // for ( size_t i = 0; i < lsize_*2; i++ )
+    // {
+    //   std::cout << '-';
+    // }
+
+    for (size_t i = 0; i < lsize_*nlayers_; i++)
     {
       if ((layers_[i] == nullptr))
       {
-        std::cout << "* ";
+        std::cout << i << "* ";
       }else
       {
-        std::cout << "x ";
+        std::cout << i << "x ";
       }
-      if ( ((i+1) % lsize_) == 0 )
-      {
-        std::cout << std::endl;
-      }
-    }
-    for ( size_t i = 0; i < lsize_*2; i++ )
-    {
-      std::cout << '-';
     }
     std::cout << std::endl;
   }
@@ -189,6 +200,16 @@ namespace lyachko
     }
 
     return layers_[lsize_*index1 - (lsize_ - index2) - 1];
+  }
+
+  std::shared_ptr<lyachko::Shape> * Matrix::operator [] ( const size_t index ) const
+  {
+    if ( index >= nlayers_ )
+    {
+      throw std::invalid_argument( "Index if out of range" );
+    }
+
+    return layers_.get() + index * lsize_;
   }
 
   void Matrix::addElement( const std::shared_ptr<Shape> & shape )

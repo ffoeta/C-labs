@@ -250,14 +250,14 @@ namespace lyachko
       shapelist_[i]->rotate( angle );
     }
   }
-  std::shared_ptr<Matrix> CompositeShape::getMatrix() const
+  Matrix CompositeShape::getMatrix() const
   {
     std::unique_ptr <std::shared_ptr<Shape>[]> temp__( new std::shared_ptr<Shape>[size_ + 1] );
     for ( size_t i = 0; i < size_; i++ )
     {
       temp__[i] = shapelist_[i];
     }
-    std::shared_ptr<Matrix> tempm__( new Matrix(temp__,size_) );
+    Matrix tempm__( temp__, size_ );
     
     return tempm__;
   }
