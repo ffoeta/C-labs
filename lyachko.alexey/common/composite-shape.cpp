@@ -1,5 +1,5 @@
 #include "composite-shape.hpp"
-#include <iostream>
+#include <stdexcept>
 #include <cmath>
 namespace lyachko
 {
