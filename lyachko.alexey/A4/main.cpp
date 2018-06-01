@@ -13,6 +13,7 @@ int main()
     std::shared_ptr<lyachko::Shape> circle2(new lyachko::Circle({9,9},2));
     std::shared_ptr<lyachko::Shape> rectangle3(new lyachko::Rectangle({{1,1},2,2}));
     std::shared_ptr<lyachko::Shape> circle4(new lyachko::Circle({-9,-9},2));
+    std::shared_ptr<lyachko::Shape> circle5(new lyachko::Circle({1,1},2));
 
     lyachko::CompositeShape compositeshape;
     std::shared_ptr<lyachko::Matrix> matrix;
@@ -27,6 +28,8 @@ int main()
 
     matrix = compositeshape.getMatrix();
     matrix2 = matrix;
+    matrix2->info();
+    matrix2->addElement(circle5);
     matrix2->info();
 
   } catch ( std::invalid_argument & smth ) 

@@ -191,4 +191,33 @@ namespace lyachko
     return layers_[lsize_*index1 - (lsize_ - index2) - 1];
   }
 
+  void Matrix::addElement( const std::shared_ptr<Shape> & shape )
+  {
+    size_t counter_ = 0;
+    size_t counter__ = 0;
+    for (size_t i = 0; i < lsize_ * nlayers_; i ++ )
+    {
+      if ( layers_[i] != nullptr ) 
+      {
+        counter_ ++;
+      }
+    }
+
+    std::unique_ptr <std::shared_ptr<Shape>[]> temp_(new std::shared_ptr<Shape>[counter_ + 1]);
+
+    for (size_t i = 0; i < lsize_ * nlayers_; i ++ )
+    {
+      if ( layers_[i] != nullptr ) 
+      {
+        temp_[counter__] = layers_[i];
+        counter__++;
+      }
+    }
+    temp_[counter_] = shape;
+    Matrix matrix_(temp_,counter_ + 1);
+    this->layers_.swap(matrix_.layers_);
+    this->lsize_ = matrix_.lsize_;
+    this->nlayers_ = matrix_.nlayers_;
+  }
+
 }

@@ -1,8 +1,8 @@
 #ifndef MATRIX_HPP
 #define MATRIX_HPP
 
-#include "shape.hpp"
 #include <memory>
+#include "shape.hpp"
 
 namespace lyachko
 {
@@ -18,6 +18,7 @@ namespace lyachko
     Matrix & operator=( Matrix && matrix );
     std::shared_ptr<lyachko::Shape> getElement( const size_t index1, const size_t index2 ) const;
     void info() const noexcept;
+    void addElement( const std::shared_ptr<Shape> & shape );
 
   private:
     

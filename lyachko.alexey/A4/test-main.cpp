@@ -258,6 +258,43 @@ BOOST_AUTO_TEST_SUITE( A4_Matrix )
     BOOST_REQUIRE( matrix.get()->getElement( 1, 2 ) == compositeshape2 );
     BOOST_REQUIRE( matrix.get()->getElement( 1, 3 ) == circle4 );
     BOOST_REQUIRE( matrix.get()->getElement( 2, 1 ) == rectangle3 );
+
   }
+
+  BOOST_AUTO_TEST_CASE( Matrix_Check_Add )
+  {
+    std::shared_ptr<lyachko::Shape> rectangle1(new lyachko::Rectangle( { { 1, 1 }, 1, 1 } ) );
+    std::shared_ptr<lyachko::Shape> circle2( new lyachko::Circle( { 9, 9 }, 2 ) );
+    std::shared_ptr<lyachko::Shape> rectangle3( new lyachko::Rectangle( { { 1, 1 },2,2} ) );
+    std::shared_ptr<lyachko::Shape> circle4( new lyachko::Circle( { -9, -9 }, 2) );
+    std::shared_ptr<lyachko::Shape> circle5( new lyachko::Circle( { 1, 1 }, 2) );
+
+    lyachko::CompositeShape compositeshape;
+    std::shared_ptr<lyachko::Matrix> matrix;
+    lyachko::CompositeShape compositeshape1( circle2 );
+    std::shared_ptr<lyachko::Shape> compositeshape2( new lyachko::CompositeShape( compositeshape1 ) );
+
+    compositeshape.add(rectangle1);
+    compositeshape.add(compositeshape2);
+    compositeshape.add(rectangle3);
+    compositeshape.add(circle4);
+
+    matrix = compositeshape.getMatrix();
+
+    BOOST_REQUIRE( matrix.get()->getElement( 1, 1 ) == rectangle1 );
+    BOOST_REQUIRE( matrix.get()->getElement( 1, 2 ) == compositeshape2 );
+    BOOST_REQUIRE( matrix.get()->getElement( 1, 3 ) == circle4 );
+    BOOST_REQUIRE( matrix.get()->getElement( 2, 1 ) == rectangle3 );
+
+    matrix->addElement(circle5);
+
+    BOOST_REQUIRE( matrix.get()->getElement( 1, 1 ) == rectangle1 );
+    BOOST_REQUIRE( matrix.get()->getElement( 1, 2 ) == compositeshape2 );
+    BOOST_REQUIRE( matrix.get()->getElement( 1, 3 ) == circle4 );
+    BOOST_REQUIRE( matrix.get()->getElement( 2, 1 ) == rectangle3 );
+    BOOST_REQUIRE( matrix.get()->getElement( 3, 1 ) == circle5 );
+
+  }
+
 
 BOOST_AUTO_TEST_SUITE_END()
