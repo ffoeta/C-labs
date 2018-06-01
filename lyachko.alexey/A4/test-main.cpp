@@ -1,10 +1,10 @@
 #define BOOST_TEST_MAIN
 #include <stdexcept>
+#include <memory>
 #include <boost/test/included/unit_test.hpp>
 #include "circle.hpp"
 #include "rectangle.hpp"
 #include "composite-shape.hpp"
-#include <memory>
 
 const double EPSILON = 0.0001;
 
