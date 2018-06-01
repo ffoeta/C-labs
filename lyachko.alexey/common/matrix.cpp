@@ -192,16 +192,6 @@ namespace lyachko
     std::cout << std::endl;
   }
 
-  std::shared_ptr<lyachko::Shape> Matrix::getElement( const size_t index1, const size_t index2 ) const
-  {
-    if ( ( index1  > nlayers_ ) || ( index2 > lsize_ ) )
-    {
-      throw std::invalid_argument("index if out of range");
-    }
-
-    return layers_[lsize_*index1 - (lsize_ - index2) - 1];
-  }
-
   std::shared_ptr<lyachko::Shape> * Matrix::operator [] ( const size_t index ) const
   {
     if ( index >= nlayers_ )
