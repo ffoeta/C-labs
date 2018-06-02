@@ -1,8 +1,8 @@
 #ifndef COMPOSITESHAPE_HPP
 #define COMPOSITESHAPE_HPP
 
-#include "shape.hpp"
 #include <memory>
+#include "shape.hpp"
 #include "matrix.hpp"
 
 namespace lyachko

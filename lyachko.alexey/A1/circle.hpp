@@ -10,7 +10,7 @@ class Circle : public Shape
 public:
 
   //Constructor
-  Circle(const point_t & new_center, double new_r);
+  Circle( const point_t & new_center, double new_r );
 
   //Fucntion returning Area value
   virtual double getArea() const override;
@@ -19,15 +19,15 @@ public:
   virtual rectangle_t getFrameRect()  const override;
 
   //Move to new coordinates
-  virtual void move(const point_t & new_center) override;
+  virtual void move( const point_t & new_center ) override;
 
   //Shifting coordinates
-  virtual void move(double dx, double dy) override;
+  virtual void move( double dx, double dy ) override;
 
 //Private methods, fucntions and variables
 private:
 
-  //Coorinates 
+  //Coorinates
   point_t center_;
 
   //Radius

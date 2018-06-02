@@ -1,6 +1,7 @@
-#include "composite-shape.hpp"
 #include <stdexcept>
 #include <cmath>
+#include "composite-shape.hpp"
+
 namespace lyachko
 {
 
@@ -14,7 +15,7 @@ namespace lyachko
   {
     if ( shape == nullptr )
     {
-      throw std::invalid_argument( "Trying to create CompositeShape through nullptr" );
+      throw std::invalid_argument( " CMP::Attempt to initialize CompositeShape using empty data. Abort. " );
     }
     shapelist_.reset( new std::shared_ptr<Shape>[1]);
     shapelist_[0] = shape;
@@ -67,7 +68,7 @@ namespace lyachko
   {
     if ( shape == nullptr )
     {
-      throw std::invalid_argument( "Trying to add nullptr to CompositeShape" );
+      throw std::invalid_argument( " CMP::Attempt to add empty data to CompositeShape. Abort. " );
     }
     
     std::unique_ptr <std::shared_ptr<Shape>[]> temp__(new std::shared_ptr<Shape>[size_ + 1]);
@@ -174,7 +175,7 @@ namespace lyachko
   {
     if ( scale_coef < 0.0 )
     {
-      throw std::invalid_argument( "scale_coeff mustn't be lower than 0" );
+      throw std::invalid_argument( " CMP::Scale_coeff mustn't be lower than 0. Abort. " );
     }
 
     double x0 = getFrameRect().pos.x;
@@ -213,11 +214,11 @@ namespace lyachko
   {
     if ( ( index > size_ ) || ( index <= 0 ) )
     {
-      throw std::invalid_argument( "No such index" );
+      throw std::invalid_argument( "CMP::No such index" );
     }
     if ( size_ == 0 )
     {
-      throw std::invalid_argument( "No elements to delete" );
+      throw std::invalid_argument( "CMP::No elements to delete" );
     }
     std::unique_ptr <std::shared_ptr<Shape>[]> temp__(new std::shared_ptr<Shape>[size_ - 1]);
     for ( size_t i = 0; i < index-1; i++ )
@@ -266,7 +267,7 @@ namespace lyachko
   {
     if ( index > size_ )
     {
-      throw std::invalid_argument("Index if out of range");
+      throw std::invalid_argument("CMP::Index is out of range");
     }
 
     return shapelist_[index];

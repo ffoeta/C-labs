@@ -9,65 +9,68 @@ int main()
 
   try
   {
-    std::cout << " Creating 4 figures to be added to composite shape and one to test matrix class " << std::endl;
     std::shared_ptr<lyachko::Shape> rectangle1(new lyachko::Rectangle( { { 1, 1 }, 6, 6 } ) );
     std::shared_ptr<lyachko::Shape> rectangle2(new lyachko::Rectangle( { { 1, 1 }, 2, 2 } ) );
     std::shared_ptr<lyachko::Shape> rectangle3(new lyachko::Rectangle( { { 1, 1 }, 1, 1 } ) );
     std::shared_ptr<lyachko::Shape> rectangle4(new lyachko::Rectangle( { { 1 , 1 }, 6, 6 }));
-
-    
+    std::shared_ptr<lyachko::Shape> rectangle5(new lyachko::Rectangle( { { 10 , 10 }, 1, 1 }));
     lyachko::Matrix matrix;
     lyachko::CompositeShape compositeshape;
     compositeshape.add(rectangle1);
     compositeshape.add(rectangle2);
     compositeshape.add(rectangle3);
-    compositeshape.add(rectangle4);
     matrix = compositeshape.getMatrix();
     matrix.info();
 
+    std::cout << " Should get 3 YES if added correctly: " << std::endl;
+
     if (matrix[0][0] == rectangle1)
     {
-      std::cout<<"YES"<<std::endl;
+      std::cout<<" Rectangle 1 is added to the matrix correctly "<<std::endl;
     }
 
-    if (matrix[0][1] == rectangle2)
+    if (matrix[1][0] == rectangle2)
     {
-      std::cout<<"YES"<<std::endl;
+      std::cout<<" Rectangle 2 is added to the matrix correctly "<<std::endl;
     }
 
-    if (matrix[0][2] == rectangle3)
+    if (matrix[2][0] == rectangle3)
     {
-      std::cout<<"YES"<<std::endl;
+      std::cout<<" Rectangle 3 is added to the matrix correctly "<<std::endl;
     }
 
-    if (matrix[0][3] == rectangle4)
-    {
-      std::cout<<"YES"<<std::endl;
-    }
-
+    matrix.addElement(rectangle4);
     lyachko::Matrix matrix2;
     matrix2 = matrix;
+    matrix2.addElement(rectangle5);
 
     matrix2.info();
 
+    std::cout << " Should get 5 YES if copied and added correctly: " << std::endl;
+
     if (matrix2[0][0] == rectangle1)
     {
-      std::cout<<"YES"<<std::endl;
+      std::cout<<" Rectangle 1 is added to the matrix correctly "<<std::endl;
     }
 
-    if (matrix2[0][1] == rectangle2)
+    if (matrix2[1][0] == rectangle2)
     {
-      std::cout<<"YES"<<std::endl;
+      std::cout<<" Rectangle 2 is added to the matrix correctly "<<std::endl;
     }
 
-    if (matrix2[0][2] == rectangle3)
+    if (matrix2[2][0] == rectangle3)
     {
-      std::cout<<"YES"<<std::endl;
+      std::cout<<" Rectangle 3 is added to the matrix correctly "<<std::endl;
     }
 
-    if (matrix2[0][3] == rectangle4)
+    if (matrix2[3][0] == rectangle4)
     {
-      std::cout<<"YES"<<std::endl;
+      std::cout<<" Rectangle 4 is added to the matrix correctly "<<std::endl;
+    }
+
+    if (matrix2[0][1] == rectangle5)
+    {
+      std::cout<<" Rectangle 5 is added to the matrix correctly "<<std::endl;
     }
 
     //copy constructor worked fine.

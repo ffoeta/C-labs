@@ -10,7 +10,7 @@ class Rectangle : public Shape
 public:
 
   //Constructor of the class
-  Rectangle(const rectangle_t & new_center);
+  Rectangle( const rectangle_t & new_center );
 
   //Function returning Area value
   virtual double getArea() const override;
@@ -19,10 +19,10 @@ public:
   virtual rectangle_t getFrameRect() const override;
 
   //Move to new coordinates
-  virtual void move(const point_t & new_center) override;
+  virtual void move( const point_t & new_center ) override;
 
   //Shifting coordinates
-  virtual void move(double dx, double dy) override;
+  virtual void move( double dx, double dy ) override;
 
   //Private methods, fucntions and variables  
   private:

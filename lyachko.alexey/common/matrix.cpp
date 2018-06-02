@@ -1,19 +1,19 @@
-#include "matrix.hpp"
 #include <memory>
 #include <iostream>
 #include <cmath>
+#include "matrix.hpp"
 
 namespace lyachko
 {
   Matrix::Matrix() :
-   layers_(new std::shared_ptr<Shape>[0]), lsize_(0), nlayers_(0)
+   layers_( new std::shared_ptr<Shape>[0] ), lsize_( 0 ), nlayers_( 0 )
   {
   }
 
   Matrix::Matrix( const Matrix & matrix ) :
-   lsize_(matrix.lsize_), nlayers_(matrix.nlayers_)
+   lsize_( matrix.lsize_ ), nlayers_( matrix.nlayers_ )
   {
-    std::unique_ptr <std::shared_ptr<Shape>[]> temp__(new std::shared_ptr<Shape>[lsize_ * nlayers_]);
+    std::unique_ptr <std::shared_ptr<Shape>[]> temp__( new std::shared_ptr<Shape>[lsize_ * nlayers_] );
     for ( size_t i = 0; i < lsize_ * nlayers_; i++ )
     {
       temp__[i] = matrix.layers_[i];
@@ -22,7 +22,7 @@ namespace lyachko
   }
 
   Matrix::Matrix( Matrix && matrix ) :
-   layers_( std::move( matrix.layers_ ) ), lsize_(matrix.lsize_), nlayers_(matrix.nlayers_)
+   layers_( std::move( matrix.layers_ ) ), lsize_( matrix.lsize_ ), nlayers_( matrix.nlayers_ )
   {
   }
 
@@ -32,14 +32,15 @@ namespace lyachko
     {
       return * this;
     }
-    std::unique_ptr <std::shared_ptr<Shape>[]> temp__(new std::shared_ptr<Shape>[lsize_ * nlayers_]);
-    for ( size_t i = 0; i < lsize_ * nlayers_; i++ )
+    std::unique_ptr <std::shared_ptr<Shape>[]> temp__( new std::shared_ptr<Shape>[matrix.lsize_ * matrix.nlayers_] );
+    for ( size_t i = 0; i < matrix.lsize_ * matrix.nlayers_; i++ )
     {
       temp__[i] = matrix.layers_[i];
     }
-    this->layers_.swap(temp__);
+    this->layers_.swap( temp__ );
     this->lsize_ = matrix.lsize_;
     this->nlayers_ = matrix.nlayers_;
+
 
     return * this;
   }
@@ -54,18 +55,16 @@ namespace lyachko
     layers_ = std::move( matrix.layers_ );
     lsize_ = matrix.lsize_;
     nlayers_ = matrix.nlayers_;
-    matrix.nlayers_ = 0;
-    matrix.lsize_ = 0;
 
     return * this;
   }
 
   Matrix::Matrix( const std::unique_ptr <std::shared_ptr<Shape>[]> & rawlist, size_t size ) :
-   layers_(new std::shared_ptr<Shape>[0]), lsize_(0), nlayers_(0)
+   layers_( new std::shared_ptr<Shape>[0] ), lsize_( 0 ), nlayers_( 0 )
   {
     if ( (rawlist == nullptr) || ( size == 0 ) )
     {
-      throw std::invalid_argument( "List of new shapes mustn't be empty" );
+      throw std::invalid_argument( " Matrix::Attempt to initialize matrix using empty data. Abort. " );
     }
 
     size_t lsize__ = 0;
@@ -82,7 +81,7 @@ namespace lyachko
     {
       for ( size_t j = 0; j < i; j++ )
       {
-        if ( rawlist[i]->getFrameRect().cross(rawlist[j]->getFrameRect()) )
+        if ( rawlist[i]->getFrameRect().cross( rawlist[j]->getFrameRect() ) )
         {
             if (layers__[i] <= layers__[j])
             {
@@ -94,7 +93,7 @@ namespace lyachko
 
     for ( size_t i = 0; i < size; i++ )
     {
-      nlayers__ = std::fmax(nlayers__,layers__[i]);
+      nlayers__ = std::fmax( nlayers__, layers__[i] );
     }
 
     for ( size_t i = 0; i < size; i++ )
@@ -121,8 +120,8 @@ namespace lyachko
     lsize_ = lsize__;
     nlayers_ = nlayers__;
 
-    std::unique_ptr <std::shared_ptr<Shape>[]> temp___(new std::shared_ptr<Shape>[lsize_ * nlayers_]);
-    layers_.swap(temp___);
+    std::unique_ptr <std::shared_ptr<Shape>[]> temp___( new std::shared_ptr<Shape>[lsize_ * nlayers_] );
+    layers_.swap( temp___ );
 
 
     for ( size_t i = 0; i < lsize_*nlayers_; i++ )
@@ -157,46 +156,30 @@ namespace lyachko
   {
 
     std::cout << std::endl;
-    std::cout << "Layers: " << nlayers_ << std::endl;
-    std::cout << "Max size: " << lsize_ << std::endl;
+    std::cout << " Layers: " << nlayers_ << std::endl;
+    std::cout << " Max size: " << lsize_ << std::endl;
 
-    // for ( size_t i = 0; i < lsize_*nlayers_; i++ )
-    // {
-    //   if ((layers_[i] == nullptr))
-    //   {
-    //     std::cout << "* ";
-    //   }else
-    //   {
-    //     std::cout << "x ";
-    //   }
-    //   if ( ((i+1) % lsize_) == 0 )
-    //   {
-    //     std::cout << std::endl;
-    //   }
-    // }
-    // for ( size_t i = 0; i < lsize_*2; i++ )
-    // {
-    //   std::cout << '-';
-    // }
-
-    for (size_t i = 0; i < lsize_*nlayers_; i++)
+    for ( size_t i = 0; i < lsize_*nlayers_; i++ )
     {
-      if ((layers_[i] == nullptr))
+      if ( ( layers_[i] == nullptr ) )
       {
-        std::cout << i << "* ";
+        std::cout << " * ";
       }else
       {
-        std::cout << i << "x ";
+        std::cout << " x ";
+      }
+      if ( ( (i + 1) % lsize_) == 0 )
+      {
+        std::cout << std::endl;
       }
     }
-    std::cout << std::endl;
   }
 
   std::shared_ptr<lyachko::Shape> * Matrix::operator [] ( const size_t index ) const
   {
     if ( index >= nlayers_ )
     {
-      throw std::invalid_argument( "Index if out of range" );
+      throw std::invalid_argument( " Matrix::Index if out of range. Abort. " );
     }
 
     return layers_.get() + index * lsize_;
@@ -204,6 +187,10 @@ namespace lyachko
 
   void Matrix::addElement( const std::shared_ptr<Shape> & shape )
   {
+    if ( shape == nullptr )
+    {
+      throw std::invalid_argument( " Matrix::Attempt to add empty data to matrix. Abort. " );
+    }
     size_t counter_ = 0;
     size_t counter__ = 0;
     for (size_t i = 0; i < lsize_ * nlayers_; i ++ )

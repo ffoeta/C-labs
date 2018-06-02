@@ -11,7 +11,7 @@ namespace lyachko
   {
     if (r_ < 0.0) 
     {
-      throw std::invalid_argument("Radius must be greater than 0");
+      throw std::invalid_argument(" Circle::Attempt to initialize Circle using R < 0. Abort. ");
     }
   }
 
@@ -40,7 +40,7 @@ namespace lyachko
   {
     if (scale_coef <= 0.0)
     {
-      throw std::invalid_argument("Scale coef must be greater than or even 0");
+      throw std::invalid_argument(" Circle::Scale coef must be greater than or even 0 ");
     }
     r_ *= scale_coef;
   }

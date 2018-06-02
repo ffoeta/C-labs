@@ -18,4 +18,4 @@ struct rectangle_t
   double width, height;
 };
 
-#endif 
+#endif

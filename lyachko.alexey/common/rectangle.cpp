@@ -1,6 +1,6 @@
-#include "rectangle.hpp"
 #include <stdexcept>
 #include <cmath>
+#include "rectangle.hpp"
 
 namespace lyachko
 {
@@ -10,7 +10,7 @@ namespace lyachko
   {
     if ((rectangle_.width <= 0.0) || (rectangle_.height <= 0.0))
     {
-      throw std::invalid_argument("Height and Width must be greater than 0");
+      throw std::invalid_argument( " Rectangle::Atempt to initialize Rectangle with height or width lower than 0. Abort. " );
     }
   }
 
@@ -76,7 +76,7 @@ namespace lyachko
   {
     if (scale_coef < 0.0)
     {
-      throw std::invalid_argument("Scale coef must be greater than or even 0");
+      throw std::invalid_argument(" Rectagnle::Scale coef must be greater than or even 0 ");
     }
     rectangle_.height *= scale_coef;
     rectangle_.width *= scale_coef;
