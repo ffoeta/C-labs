@@ -16,10 +16,16 @@ void lyachko::sortx3(std::istream& is, std::ostream& os, const std::string& dire
   }
 
   int temp = 0;
-  while (!is.eof() && is.good())
+  
+  is >> temp;
+  while (!is.eof()) 
   {
-    is >> temp;
+    if (is.bad() || is.fail())
+    {
+      throw std::invalid_argument("Error:\n Input stream failed");
+    }
     vec.push_back(temp);
+    is >> temp;
   }
 
   if (!vec.empty())

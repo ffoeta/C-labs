@@ -7,10 +7,13 @@
 
 int main(int argc, const char* argv[])
 {
-  try{
-    if (argc < 2) {
+  try
+  {
+    if (argc < 2)
+    {
       throw std::invalid_argument("Error:\n B1 requires arguments.");
     }
+
     switch ( atoi(argv[1]) ) {
     case 1: 
       if (argc != 3) {
@@ -36,6 +39,9 @@ int main(int argc, const char* argv[])
       } else { 
         lyachko::fillVector(std::cout, atoi(argv[3]), argv[2]);
       } break;
+    default:
+      throw std::invalid_argument("Error:\n Only 1-4 1st parameters supported.");
+      break;
     }
   }
   catch (std::invalid_argument& ex)

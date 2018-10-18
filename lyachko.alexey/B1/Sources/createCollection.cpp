@@ -25,11 +25,6 @@ void lyachko::createCollection(std::istream& is, std::ostream& os)
     throw std::invalid_argument("Error:\n Input had to end with 0.");
   }
 
-  if (vec.empty())
-  {
-    throw std::invalid_argument("Error:\n Vec is empty.");
-  }
-
   if (vec.back() == 1)
   {
     for (auto it = vec.begin(); it != vec.end(); ++it)

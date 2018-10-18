@@ -18,7 +18,12 @@ void lyachko::fillVector(std::ostream &os, size_t size, const std::string &direc
 {
   if (direction != "ascending" &&
       direction != "descending") {
-    throw std::invalid_argument("Error: wrong direction of the sorting!");
+    throw std::invalid_argument("Error:\n wrong direction.");
+  }
+
+  if (!size)
+  {
+    throw std::invalid_argument("Error:\n wrong size.");
   }
 
   auto dir = false;
