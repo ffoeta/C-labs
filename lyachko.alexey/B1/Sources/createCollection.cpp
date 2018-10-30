@@ -20,14 +20,9 @@ void lyachko::createCollection(std::istream& is, std::ostream& os)
     }
   }
 
-  if (buffer != 0)
-  {
-    throw std::invalid_argument("Error:\n Input had to end with 0.");
-  }
+  if (buffer != 0) throw std::invalid_argument("Error:\n Input had to end with 0.");
 
-  if (vec.empty()) {
-    return;
-  }
+  if (vec.empty()) return;
 
   if (vec.back() == 1)
   {
