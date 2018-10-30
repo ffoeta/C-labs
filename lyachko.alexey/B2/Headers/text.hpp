@@ -6,6 +6,9 @@
 #include <vector>
 #include "lib.hpp"
 
+const int MAX_LENGTH = 20;
+const int MAX_DASH = 3;
+
 class Text
 {
 public:

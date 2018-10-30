@@ -107,15 +107,15 @@ Text::Text(std::istream &is, std::ostream &os, unsigned long line_width) :
     expression prev = vec_.front();
     switch(it->type) {
     case expression_type::WORD:
-      if (it->expression.length() > 20)
+      if (it->expression.length() > MAX_LENGTH)
         throw std::invalid_argument("Error: \n Input failed: word exeeds 20 symbols.");
       break;
     case expression_type::NUMBER:
-      if (it->expression.length() > 20)
+      if (it->expression.length() > MAX_LENGTH)
         throw std::invalid_argument("Error: \n Input failed: number exeeds 20 symbols.");
       break;
     case expression_type::DASH:
-      if(it->expression.length() != 3)
+      if(it->expression.length() != MAX_DASH)
         throw std::invalid_argument("Error: \n Input failed: dash length isnt 3");
       prev = *std::prev(it);
       if((prev.type == expression_type::DASH) || ((prev.type == expression_type::SIGN) && (prev.expression != ",")))
