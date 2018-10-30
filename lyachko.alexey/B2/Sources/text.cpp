@@ -2,7 +2,8 @@
 
 void printvec(std::vector<expression> &v, std::ostream &os)
 {
-  for (auto elem : v) os << elem.expression;
+  for (auto elem : v)
+    os << elem.expression;
   os << std::endl;
 }
 
@@ -15,7 +16,8 @@ int rework (std::vector<expression> &line, std::ostream &os)
     reworked.insert(reworked.begin(),line.back());
     width += line.back().expression.length();
     line.pop_back();
-    if (reworked.front().type == expression_type::WORD || reworked.front().type == expression_type::NUMBER)break;
+    if (reworked.front().type == expression_type::WORD || reworked.front().type == expression_type::NUMBER)
+      break;
   }
   printvec(line, os);
   line = reworked;
@@ -67,7 +69,8 @@ Text::Text(std::istream &is, std::ostream &os, unsigned long line_width) :
   while (input_)
   {
     char temp = input_.get();
-    while (std::isspace(temp)) temp = input_.get();
+    while (std::isspace(temp))
+      temp = input_.get();
     if (isalpha(temp)) {
       input_.unget();
       expression_type temp_expression_type = expression_type::WORD;
@@ -97,20 +100,23 @@ Text::Text(std::istream &is, std::ostream &os, unsigned long line_width) :
     }
   };
 
-  if(!vec_.empty() && (vec_.front().type != expression_type::WORD) && (vec_.front().type != expression_type::NUMBER)) {
+  if(!vec_.empty() && (vec_.front().type != expression_type::WORD) && (vec_.front().type != expression_type::NUMBER))
     throw std::invalid_argument("Error: \n Input failed at start.");
-  }
+
   for(auto it = vec_.begin(); it != vec_.end(); it++) {
     expression prev = vec_.front();
     switch(it->type) {
     case expression_type::WORD:
-      if (it->expression.length() > 20) throw std::invalid_argument("Error: \n Input failed: word exeeds 20 symbols.");
+      if (it->expression.length() > 20)
+        throw std::invalid_argument("Error: \n Input failed: word exeeds 20 symbols.");
       break;
     case expression_type::NUMBER:
-      if (it->expression.length() > 20) throw std::invalid_argument("Error: \n Input failed: number exeeds 20 symbols.");
+      if (it->expression.length() > 20)
+        throw std::invalid_argument("Error: \n Input failed: number exeeds 20 symbols.");
       break;
     case expression_type::DASH:
-      if(it->expression.length() != 3) throw std::invalid_argument("Error: \n Input failed: dash length isnt 3");
+      if(it->expression.length() != 3)
+        throw std::invalid_argument("Error: \n Input failed: dash length isnt 3");
       prev = *std::prev(it);
       if((prev.type == expression_type::DASH) || ((prev.type == expression_type::SIGN) && (prev.expression != ",")))
         throw std::invalid_argument("Error: \n Input failed. Sign followed a sign.");
@@ -132,17 +138,17 @@ void Text::outprint()
   for (auto it = vec_.begin(); it != vec_.end(); it++) {
     switch(it->type) {
     case expression_type::SIGN:
-      if(currentWidth + 1 > line_width_) {
+      if(currentWidth + 1 > line_width_)
         currentWidth = rework(line, output_);
-      }
+
       line.push_back(*it);
       currentWidth += it->expression.length();
       break;
 
     case expression_type::DASH:
-      if(currentWidth + 4 > line_width_) {
+      if(currentWidth + 4 > line_width_)
         currentWidth = rework(line, output_);
-      }
+
       line.back().expression += " ";
       line.push_back(*it);
       currentWidth += it->expression.length() + 1;
@@ -165,7 +171,6 @@ void Text::outprint()
     }
 
   }
-  if(!line.empty()) {
+  if(!line.empty())
     printvec(line, output_);
-  }
 }
