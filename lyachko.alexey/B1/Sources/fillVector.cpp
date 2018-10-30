@@ -16,12 +16,16 @@ void lyachko::fillRandom(double * array, int size) noexcept
 
 void lyachko::fillVector(std::ostream &os, size_t size, const std::string &direction)
 {
-  if (direction != "ascending" && direction != "descending") throw std::invalid_argument("Error:\n wrong direction.");
+  if (direction != "ascending" && direction != "descending")
+    throw std::invalid_argument("Error:\n wrong direction.");
 
-  if (!size) throw std::invalid_argument("Error:\n wrong size.");
+  if (!size)
+    throw std::invalid_argument("Error:\n wrong size.");
 
   bool dir = false;
-  if (direction == "ascending") dir = true;
+
+  if (direction == "ascending")
+    dir = true;
 
   std::vector<double> buf_vec(size);
   srand(time(NULL));

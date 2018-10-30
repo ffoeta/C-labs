@@ -9,10 +9,7 @@ int main(int argc, const char* argv[])
 {
   try
   {
-    if (argc < 2)
-    {
-      throw std::invalid_argument("Error:\n B1 requires arguments.");
-    }
+    if (argc < 2) throw std::invalid_argument("Error:\n B1 requires arguments.");
 
     switch ( atoi(argv[1]) ) {
     case 1:

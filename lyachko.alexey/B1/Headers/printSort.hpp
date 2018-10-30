@@ -15,17 +15,17 @@ namespace lyachko
     {
       typedef typename Container::reference ref;
 
-      static size_t getBegin(const Container&)
+      size_t getBegin(const Container&)
       {
         return 0;
       }
 
-      static size_t getEnd(const Container& container)
+      size_t getEnd(const Container& container)
       {
         return container.size();
       }
 
-      static ref getElement(Container& container, size_t i)
+      ref getElement(Container& container, size_t i)
       {
         return container.at(i);
       }
@@ -37,17 +37,17 @@ namespace lyachko
       typedef typename Container::reference ref;
       typedef typename Container::iterator iterator;
 
-      static iterator getBegin(Container& container)
+      iterator getBegin(Container& container)
       {
         return container.begin();
       }
 
-      static iterator getEnd(Container& container)
+      iterator getEnd(Container& container)
       {
         return container.end();
       }
 
-      static ref getElement(const Container&, iterator &it)
+      ref getElement(const Container&, iterator &it)
       {
         return *it;
       }
@@ -58,17 +58,17 @@ namespace lyachko
     {
       typedef typename Container::reference ref;
 
-      static size_t getBegin(const Container&)
+      size_t getBegin(const Container&)
       {
         return 0;
       }
 
-      static size_t getEnd(const Container& container)
+      size_t getEnd(const Container& container)
       {
         return container.size();
       }
 
-      static ref getElement(Container& container, size_t i)
+      ref getElement(Container& container, size_t i)
       {
         return container[i];
       }
@@ -79,28 +79,18 @@ namespace lyachko
   void sort(Container & collection, CallType callType, bool ascending) noexcept
   {
    for (auto it1 = callType.getBegin(collection); it1 != callType.getEnd(collection); it1++)
-    {
       for (auto it2 = it1; it2 != callType.getEnd(collection); it2++)
-      {
         if ((callType.getElement(collection, it1) > callType.getElement(collection, it2)) == ascending)
-        {
           std::swap(callType.getElement(collection, it1), callType.getElement(collection, it2));
-        }
-      }
-    }
   }
 
   template <typename T>
   void print(T & collection, std::ostream & stream, const std::string & sep, const bool nextline = false) noexcept
   {
     for (const auto & elem : collection)
-    {
       stream << elem << sep;
-    }
     if (nextline)
-    {
       stream << std::endl;
-    }
   }
 }
 

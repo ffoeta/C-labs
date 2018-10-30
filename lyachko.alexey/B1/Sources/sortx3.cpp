@@ -3,14 +3,11 @@
 void lyachko::sortx3(std::istream& is, std::ostream& os, const std::string& direction)
 {
   if (!((direction == "ascending") || (direction == "descending")))
-  {
     throw std::invalid_argument("Error:\n Wrong direction.");
-  }
 
   std::vector<int> vec;
 
-  bool dir = false;
-  if (direction == "ascending") dir = true;
+  bool dir = (direction == "ascending");
 
   int temp = 0;
 
@@ -18,9 +15,7 @@ void lyachko::sortx3(std::istream& is, std::ostream& os, const std::string& dire
   while (!is.eof())
   {
     if (is.bad() || is.fail())
-    {
       throw std::invalid_argument("Error:\n Input stream failed.");
-    }
     vec.push_back(temp);
     is >> temp;
   }
@@ -38,4 +33,4 @@ void lyachko::sortx3(std::istream& is, std::ostream& os, const std::string& dire
     print(vec2, os, " ", true);
     print(mylist, os, " ");
   }
-};
+}
