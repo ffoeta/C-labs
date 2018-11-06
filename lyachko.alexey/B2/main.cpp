@@ -1,4 +1,3 @@
-#include <iostream>
 #include "./Headers/text.hpp"
 
 int main(int argc, char * argv[])
@@ -19,10 +18,11 @@ int main(int argc, char * argv[])
     }
     if (atoi(argv[2]) < 24)
     {
-      std::cerr << "Error: \n Invalid 2nd argument." << std::endl;
+      std::cerr << "Error: \n Width lower than 24." << std::endl;
       return 1;
     }
-    else width_of_line = atoi(argv[2]);
+    else 
+    width_of_line = atoi(argv[2]);
   }
 
   try
@@ -38,7 +38,7 @@ int main(int argc, char * argv[])
   catch(std::exception &err)
   {
     std::cerr << err.what();
-    return 1;
+    return 2;
   }
 
   return 0;

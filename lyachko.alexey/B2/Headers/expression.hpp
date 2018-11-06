@@ -1,9 +1,7 @@
-#ifndef LIB_HPP
-#define LIB_HPP
+#ifndef EXPRESSION_HPP
+#define EXPRESSION_HPP
 
 #include <string>
-#include <list>
-#include <iostream>
 
 enum expression_type
 {

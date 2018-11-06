@@ -4,7 +4,8 @@
 #include <list>
 #include <memory>
 #include <vector>
-#include "lib.hpp"
+#include "expression.hpp"
+#include <iostream>
 
 const int MAX_LENGTH = 20;
 const int MAX_DASH = 3;

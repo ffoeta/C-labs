@@ -98,7 +98,7 @@ Text::Text(std::istream &is, std::ostream &os, unsigned long line_width) :
       temp_expression.expression += temp;
       vec_.push_back(temp_expression);
     }
-  };
+  }
 
   if(!vec_.empty() && (vec_.front().type != expression_type::WORD) && (vec_.front().type != expression_type::NUMBER))
     throw std::invalid_argument("Error: \n Input failed at start.");
