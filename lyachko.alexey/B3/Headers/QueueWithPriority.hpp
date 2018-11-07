@@ -8,8 +8,8 @@ template<typename Element_Type>
 class QueueWithPriority
 {
 public:
-  void PutElementToQueue(const QueueElement<Element_Type> & element);
-  void GetElementFromQueue(QueueElement<Element_Type> & result);
+  void PutElementToQueue(const ElementPriority priority, const Element_Type & item);
+  void GetElementFromQueue(Element_Type & result);
   void Accelerate() noexcept;
   int GetSize() noexcept;
   void sort();
@@ -27,21 +27,22 @@ bool comp(T & var1, T & var2)
 }
 
 template <typename Element_Type>
-void QueueWithPriority<Element_Type>::PutElementToQueue(const QueueElement<Element_Type> & element)
+void QueueWithPriority<Element_Type>::PutElementToQueue(const ElementPriority priority, const Element_Type & item)
 {
   std::list<QueueElement<Element_Type>> temp_list;
-  temp_list.push_back(element);
+  QueueElement<Element_Type> temp(item, priority);
+  temp_list.push_back(temp);
   list_.merge(temp_list, comp<QueueElement<Element_Type>>);
 }
 
 template <typename Element_Type>
-void QueueWithPriority<Element_Type>::GetElementFromQueue(QueueElement<Element_Type> & result)
+void QueueWithPriority<Element_Type>::GetElementFromQueue(Element_Type & result)
 {
   if (list_.size() == 0)
     return ;
   else
   {
-    result = *list_.begin();
+    result = list_.begin()->element;
     list_.pop_front();
     return ;
   }

@@ -2,7 +2,7 @@
 
 std::string divideString(std::string &str)
 {
-  std::string result;
+  std::string result = "";
   int count = 0;
   for (char elem: str)
   {
@@ -27,22 +27,9 @@ ElementPriority getPriority(std::string &str)
     return LOWUP;
 }
 
-std::string getPriority(ElementPriority & priority)
-{
-  if (priority == ElementPriority::HIGH)
-    return "high";
-  else if (priority == ElementPriority::NORMAL)
-    return "normal";
-  else if (priority == ElementPriority::LOW)
-    return "low";
-  else
-    return "";
-}
-
-
 void task1(std::istream &is, std::ostream &os)
 {
-  QueueElement<std::string> result;
+  std::string result;
   QueueWithPriority<std::string> queue;
   std::string line;
 
@@ -56,11 +43,11 @@ void task1(std::istream &is, std::ostream &os)
     if (line == "get")
       {
         queue.GetElementFromQueue(result);
-        if (result.element != "")
-          os << result.element << ' ' << getPriority(result.priority) << std::endl;
+        if (result != "")
+          os << result << std::endl;
         else
           os << "<EMPTY>"<< std::endl;
-        result.element.clear();
+        result.clear();
       }
     else if (line == "accelerate")
       queue.Accelerate();
@@ -73,13 +60,13 @@ void task1(std::istream &is, std::ostream &os)
       {
         auto temp_str = divideString(line);
         auto priority = getPriority(temp_str);
-        auto item = divideString(line);
+        auto item = line;
 
         
         if ( (priority == ElementPriority::LOWUP) || (item == "") || (item == " ") )
           os << "<INVALID COMMAND>" << std::endl;
         else
-          queue.PutElementToQueue(QueueElement<std::string>(item, priority));
+          queue.PutElementToQueue(priority, item);
       }
     }
     line.clear();
