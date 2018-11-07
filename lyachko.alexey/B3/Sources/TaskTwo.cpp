@@ -26,4 +26,5 @@ void task2(std::istream &is, std::ostream &os)
     list_.pop_front();
     list_.reverse();
   }
+  os << std::endl;
 }
