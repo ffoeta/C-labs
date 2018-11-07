@@ -17,11 +17,11 @@ std::string divideString(std::string &str)
 
 ElementPriority getPriority(std::string &str)
 {
-  if (str == "HIGH")
+  if (str == "high")
     return ElementPriority::HIGH;
-  else if (str == "NORMAL")
+  else if (str == "normal")
     return ElementPriority::NORMAL;
-  else if (str == "LOW")
+  else if (str == "low")
     return ElementPriority::LOW;
   else
     return LOWUP;
@@ -47,7 +47,7 @@ void task1(std::istream &is, std::ostream &os)
         if (result != "")
           os << result << std::endl;
         else
-          os << "EMPTY"<< std::endl;
+          os << "<EMPTY>"<< std::endl;
         result.clear();
       }
     else if (line == "accelerate")
@@ -56,14 +56,16 @@ void task1(std::istream &is, std::ostream &os)
     {
       std::string command = divideString(line);
       if (command != "add")
-        os << "INVALID COMMAND" << std::endl;
+        os << "<INVALID COMMAND>" << std::endl;
       else
       {
-        auto item = divideString(line);
         auto temp_str = divideString(line);
         auto priority = getPriority(temp_str);
+        auto item = divideString(line);
+
+        
         if ( (priority == ElementPriority::LOWUP) || (item == "") || (item == " ") )
-          os << "INVALID COMMAND" << std::endl;
+          os << "<INVALID COMMAND>" << std::endl;
         else
           queue.PutElementToQueue(QueueElement<std::string>(item, priority));
       }
