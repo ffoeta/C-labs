@@ -21,7 +21,7 @@ private:
 template <typename T>
 bool comp(T & var1, T & var2)
 {
-  if (var1.priority >= var2.priority)
+  if (var1.priority > var2.priority)
     return true;
   return false;
 }
