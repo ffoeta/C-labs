@@ -27,10 +27,22 @@ ElementPriority getPriority(std::string &str)
     return LOWUP;
 }
 
+std::string getPriority(ElementPriority & priority)
+{
+  if (priority == ElementPriority::HIGH)
+    return "high";
+  else if (priority == ElementPriority::NORMAL)
+    return "normal";
+  else if (priority == ElementPriority::LOW)
+    return "low";
+  else
+    return "";
+}
+
 
 void task1(std::istream &is, std::ostream &os)
 {
-  std::string result = "";
+  QueueElement<std::string> result;
   QueueWithPriority<std::string> queue;
   std::string line;
 
@@ -44,11 +56,11 @@ void task1(std::istream &is, std::ostream &os)
     if (line == "get")
       {
         queue.GetElementFromQueue(result);
-        if (result != "")
-          os << result << std::endl;
+        if (result.element != "")
+          os << result.element << ' ' << getPriority(result.priority) << std::endl;
         else
           os << "<EMPTY>"<< std::endl;
-        result.clear();
+        result.element.clear();
       }
     else if (line == "accelerate")
       queue.Accelerate();

@@ -9,7 +9,7 @@ class QueueWithPriority
 {
 public:
   void PutElementToQueue(const QueueElement<Element_Type> & element);
-  void GetElementFromQueue(Element_Type & result);
+  void GetElementFromQueue(QueueElement<Element_Type> & result);
   void Accelerate() noexcept;
   int GetSize() noexcept;
   void sort();
@@ -35,13 +35,13 @@ void QueueWithPriority<Element_Type>::PutElementToQueue(const QueueElement<Eleme
 }
 
 template <typename Element_Type>
-void QueueWithPriority<Element_Type>::GetElementFromQueue(Element_Type & result)
+void QueueWithPriority<Element_Type>::GetElementFromQueue(QueueElement<Element_Type> & result)
 {
   if (list_.size() == 0)
     return ;
   else
   {
-    result = list_.begin()->element;
+    result = *list_.begin();
     list_.pop_front();
     return ;
   }
@@ -62,7 +62,6 @@ void QueueWithPriority<Element_Type>::Accelerate() noexcept
     elem->priority = ElementPriority::LOWUP;
 
   list_.merge(temp_list, comp<QueueElement<Element_Type>>);
-  
 }
 
 template <typename Element_Type>
