@@ -6,7 +6,7 @@ std::string divideString(std::string &str)
   int count = 0;
   for (char elem: str)
   {
-    if (elem == ' ')
+    if ( (elem == ' ') || (elem == '\n') )
       break;
     result.push_back(elem);
     count++;
@@ -61,7 +61,6 @@ void task1(std::istream &is, std::ostream &os)
         auto temp_str = divideString(line);
         auto priority = getPriority(temp_str);
         auto item = line;
-
         
         if ( (priority == ElementPriority::LOWUP) || (item == "") || (item == " ") )
           os << "<INVALID COMMAND>" << std::endl;

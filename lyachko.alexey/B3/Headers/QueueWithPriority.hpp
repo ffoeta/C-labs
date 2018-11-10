@@ -51,14 +51,26 @@ void QueueWithPriority<Element_Type>::GetElementFromQueue(Element_Type & result)
 template <typename Element_Type>
 void QueueWithPriority<Element_Type>::Accelerate() noexcept
 {
+  if (list_.size() == 0) 
+    return ;
+
   std::list<QueueElement<Element_Type>> temp_list;
+
   for (auto elem = list_.begin(); elem != list_.end(); elem++)
     if (elem->priority == ElementPriority::LOW)
     {
       temp_list.push_back(*elem);
+    }
+
+  for (auto elem = list_.begin(); elem != list_.end(); elem++)
+    if (elem->priority == ElementPriority::LOW)
+    {
       list_.erase(elem);
     }
 
+  if ( temp_list.size() == 0 ) 
+    return ;
+    
   for (auto elem = temp_list.begin(); elem != temp_list.end(); elem++)
     elem->priority = ElementPriority::LOWUP;
 
