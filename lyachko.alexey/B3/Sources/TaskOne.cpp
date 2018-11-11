@@ -32,7 +32,7 @@ ElementPriority getPriority(std::string &str)
 
 void task1(std::istream &is, std::ostream &os)
 {
-  std::string result;
+  QueueElement<std::string> result;
   QueueWithPriority<std::string> queue;
   std::string line;
 
@@ -46,8 +46,8 @@ void task1(std::istream &is, std::ostream &os)
     if (line == "get")
       {
         queue.GetElementFromQueue(result);
-        if (result != "")
-          os << result << std::endl;
+        if (result.element != "")
+          os << result.element << std::endl;
         else
           os << "<EMPTY>"<< std::endl;
         result.clear();

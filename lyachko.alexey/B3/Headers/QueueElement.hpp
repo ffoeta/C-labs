@@ -15,6 +15,7 @@ struct QueueElement
   QueueElement();
   QueueElement(T new_element, ElementPriority new_priority);
   QueueElement(const QueueElement & queueelement);
+  void clear();
   T element;
   ElementPriority priority;
 };
@@ -35,6 +36,13 @@ QueueElement<T>::QueueElement(const QueueElement & queueelement)
 {
   this->element = queueelement.element;
   this->priority = queueelement.priority;
+}
+
+template<typename T>
+void QueueElement<T>::clear()
+{
+  element.clear();
+  priority = ElementPriority::LOWUP;
 }
 
 
