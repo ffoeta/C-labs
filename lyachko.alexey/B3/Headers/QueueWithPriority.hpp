@@ -62,15 +62,15 @@ void QueueWithPriority<Element_Type>::Accelerate() noexcept
       temp_list.push_back(*elem);
     }
 
+  if ( temp_list.size() == 0 ) 
+    return ;
+
   for (auto elem = list_.begin(); elem != list_.end(); elem++)
     if (elem->priority == ElementPriority::LOW)
     {
       list_.erase(elem);
     }
 
-  if ( temp_list.size() == 0 ) 
-    return ;
-    
   for (auto elem = temp_list.begin(); elem != temp_list.end(); elem++)
     elem->priority = ElementPriority::LOWUP;
 

@@ -6,12 +6,15 @@ std::string divideString(std::string &str)
   int count = 0;
   for (char elem: str)
   {
-    if ( (elem == ' ') || (elem == '\n') )
+    if (elem == ' ')
       break;
     result.push_back(elem);
     count++;
   }
-  str.erase(str.begin(), str.begin() + count + 1);
+  if ( result.size() == str.size() )
+    str.clear();
+  else
+    str.erase(str.begin(), str.begin() + count + 1);
   return result;
 }
 
