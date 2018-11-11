@@ -39,7 +39,11 @@ template <typename Element_Type>
 void QueueWithPriority<Element_Type>::GetElementFromQueue(QueueElement<Element_Type> & result)
 {
   if (list_.size() == 0)
+  {
+    result.invalidate();
     return ;
+  }
+    
   else
   {
     result = *list_.begin();

@@ -27,7 +27,7 @@ ElementPriority getPriority(std::string &str)
   else if (str == "low")
     return ElementPriority::LOW;
   else
-    return LOWUP;
+    return ElementPriority::NONE;
 }
 
 void task1(std::istream &is, std::ostream &os)
@@ -46,7 +46,7 @@ void task1(std::istream &is, std::ostream &os)
     if (line == "get")
       {
         queue.GetElementFromQueue(result);
-        if (result.element != "")
+        if (result.validate())
           os << result.element << std::endl;
         else
           os << "<EMPTY>"<< std::endl;
@@ -65,7 +65,7 @@ void task1(std::istream &is, std::ostream &os)
         auto priority = getPriority(temp_str);
         auto item = line;
         
-        if ( (priority == ElementPriority::LOWUP) || (item == "") || (item == " ") )
+        if ( (priority == ElementPriority::NONE) || (item == "") || (item == " ") )
           os << "<INVALID COMMAND>" << std::endl;
         else
           queue.PutElementToQueue(priority, item);
