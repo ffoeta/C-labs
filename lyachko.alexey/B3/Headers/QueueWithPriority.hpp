@@ -8,10 +8,10 @@ template<typename Element_Type>
 class QueueWithPriority
 {
 public:
-  void PutElementToQueue(const ElementPriority priority, const Element_Type & item);
-  void GetElementFromQueue(QueueElement<Element_Type> & result);
-  void Accelerate() noexcept;
-  int GetSize() noexcept;
+  void putElementToQueue(const ElementPriority priority, const Element_Type & item);
+  void getElementFromQueue(QueueElement<Element_Type> & result);
+  void accelerate() noexcept;
+  int getSize() noexcept;
   void sort();
 private:
   std::list<QueueElement<Element_Type>> list_;
@@ -27,7 +27,7 @@ bool comp(T & var1, T & var2)
 }
 
 template <typename Element_Type>
-void QueueWithPriority<Element_Type>::PutElementToQueue(const ElementPriority priority, const Element_Type & item)
+void QueueWithPriority<Element_Type>::putElementToQueue(const ElementPriority priority, const Element_Type & item)
 {
   std::list<QueueElement<Element_Type>> temp_list;
   QueueElement<Element_Type> temp(item, priority);
@@ -36,7 +36,7 @@ void QueueWithPriority<Element_Type>::PutElementToQueue(const ElementPriority pr
 }
 
 template <typename Element_Type>
-void QueueWithPriority<Element_Type>::GetElementFromQueue(QueueElement<Element_Type> & result)
+void QueueWithPriority<Element_Type>::getElementFromQueue(QueueElement<Element_Type> & result)
 {
   if (list_.size() == 0)
   {
@@ -53,7 +53,7 @@ void QueueWithPriority<Element_Type>::GetElementFromQueue(QueueElement<Element_T
 }
 
 template <typename Element_Type>
-void QueueWithPriority<Element_Type>::Accelerate() noexcept
+void QueueWithPriority<Element_Type>::accelerate() noexcept
 {
   if (list_.size() == 0) 
     return ;
@@ -78,7 +78,7 @@ void QueueWithPriority<Element_Type>::Accelerate() noexcept
 }
 
 template <typename Element_Type>
-int QueueWithPriority<Element_Type>::GetSize() noexcept
+int QueueWithPriority<Element_Type>::getSize() noexcept
 {
   return list_.size();
 }

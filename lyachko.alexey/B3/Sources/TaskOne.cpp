@@ -43,17 +43,17 @@ void task1(std::istream &is, std::ostream &os)
     if (line == "")
       continue;
 
-    if (line == "get")
-      {
-        queue.GetElementFromQueue(result);
-        if (result.validate())
-          os << result.element << std::endl;
-        else
-          os << "<EMPTY>"<< std::endl;
-        result.clear();
-      }
+    if (line == "get")  
+    {
+      queue.getElementFromQueue(result);
+      if (result.validate())
+        os << result.element << std::endl;
+      else
+        os << "<EMPTY>"<< std::endl;
+      result.clear();
+    }
     else if (line == "accelerate")
-      queue.Accelerate();
+      queue.accelerate();
     else
     {
       std::string command = divideString(line);
@@ -68,7 +68,7 @@ void task1(std::istream &is, std::ostream &os)
         if ( (priority == ElementPriority::NONE) || (item == "") || (item == " ") )
           os << "<INVALID COMMAND>" << std::endl;
         else
-          queue.PutElementToQueue(priority, item);
+          queue.putElementToQueue(priority, item);
       }
     }
     line.clear();
