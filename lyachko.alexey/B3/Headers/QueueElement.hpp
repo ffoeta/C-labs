@@ -13,13 +13,18 @@ enum ElementPriority
 template<typename T>
 struct QueueElement
 {
+public:
   QueueElement();
   QueueElement(T new_element, ElementPriority new_priority);
   QueueElement(const QueueElement & queueelement);
+  void setPriority(ElementPriority priority);
+  ElementPriority getPriority() const;
+  T getElement() const;
   void invalidate();
   bool validate() const;
   void clear();
   bool valid;
+private:
   T element;
   ElementPriority priority;
 };
@@ -64,6 +69,24 @@ template<typename T>
 bool QueueElement<T>::validate() const
 {
   return this->valid;
+}
+
+template<typename T>
+ElementPriority QueueElement<T>::getPriority() const
+{
+  return this->priority;
+}
+
+template<typename T>
+T QueueElement<T>::getElement() const
+{
+  return this->element;
+}
+
+template<typename T>
+void QueueElement<T>::setPriority(ElementPriority priority)
+{
+  this->priority = priority;
 }
 
 #endif

@@ -21,7 +21,7 @@ private:
 template <typename T>
 bool comp(T & var1, T & var2)
 {
-  if (var1.priority > var2.priority)
+  if (var1.getPriority() > var2.getPriority())
     return true;
   return false;
 }
@@ -61,7 +61,7 @@ void QueueWithPriority<Element_Type>::accelerate() noexcept
   std::list<QueueElement<Element_Type>> temp_list;
 
   for (auto elem = list_.begin(); elem != list_.end(); elem++)
-    if (elem->priority == ElementPriority::LOW)
+    if (elem->getPriority() == ElementPriority::LOW)
     {
       temp_list.push_back(*elem);
     }
@@ -69,10 +69,10 @@ void QueueWithPriority<Element_Type>::accelerate() noexcept
   if ( temp_list.size() == 0 ) 
     return ;
 
-  list_.remove_if([](QueueElement<Element_Type> element){ return element.priority == ElementPriority::LOW; });
+  list_.remove_if([](QueueElement<Element_Type> element){ return element.getPriority() == ElementPriority::LOW; });
 
   for (auto elem = temp_list.begin(); elem != temp_list.end(); elem++)
-    elem->priority = ElementPriority::LOWUP;
+    elem->setPriority(ElementPriority::LOWUP);
 
   list_.merge(temp_list, comp<QueueElement<Element_Type>>);
 }

@@ -47,7 +47,7 @@ void task1(std::istream &is, std::ostream &os)
     {
       queue.getElementFromQueue(result);
       if (result.validate())
-        os << result.element << std::endl;
+        os << result.getElement() << std::endl;
       else
         os << "<EMPTY>"<< std::endl;
       result.clear();
