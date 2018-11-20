@@ -68,7 +68,7 @@ void Handler::move(std::ostream &os, std::string &name, std::string &elementShif
     if (verifyNumber(elementShift))
     {
       auto mark = getBookmark(name);
-      if ( ( (mark->getCurrentNumber() + std::stoi(elementShift)) >= phonebook_.size() ) || (mark->getCurrentNumber() + std::stoi(elementShift) < 0) )
+      if ( ( (mark->getCurrentNumber() + std::stoi(elementShift)) > phonebook_.size() ) || (mark->getCurrentNumber() + std::stoi(elementShift) < 0) )
       {
         os << "<INVALID COMMAND>" << std::endl;
         return ;
@@ -88,7 +88,7 @@ void Handler::move(std::ostream &os, std::string &name, std::string &elementShif
         } else
             os << "<INVALID COMMAND>" << std::endl;
     } else
-      os << "<INVALID COMMAND>" << std::endl;
+      os << "<INVALID STEP>" << std::endl;
   } else
     os << "<INVALID COMMAND>" << std::endl;
 }
@@ -121,25 +121,36 @@ void Handler::push_back(std::ostream &os, std::string &number, std::string &name
     os << "<INVALID COMMAND>" << std::endl;
 }
 
-bool Handler::empty()
-{
-  return (phonebook_.empty());
-}
-
 void Handler::insert(std::ostream &os, std::string &bookmark, std::string &number, std::string &name, std::string &order)
 {
-  if ( (!this->verifyName(name)) || (!this->verifyNumber(number)) || 
-       (!this->checkBookmark(bookmark)) || ((order != "before") && (order != "after")) )
+  if (phonebook_.empty())
   {
-    os << "<INVALID COMMAND>" << std::endl;
-    return ;
-  }
-  auto temp = getBookmark(bookmark);
-  Record record({number, name});
-  if (order == "after")
-    phonebook_.insert(temp->getCurrentElement(), record, true);
-  else
-    phonebook_.insert(temp->getCurrentElement(), record, false);
+    if ( (!this->verifyName(name)) || (!this->verifyNumber(number)) || 
+      !(bookmark == "current") || ((order != "before") && (order != "after")) )
+    { 
+      os << "<INVALID COMMAND>" << std::endl;
+      return ;
+    }
+    Record record({number, name});
+    phonebook_.push_back(record);
+    ElementWrapper current("current");
+    current.setCurrentElement(phonebook_.cbegin());
+    bookmarks_.push_back(current);
+  } else
+  {
+    if ( (!this->verifyName(name)) || (!this->verifyNumber(number)) || 
+        (!this->checkBookmark(bookmark)) || ((order != "before") && (order != "after")) )
+    { 
+      os << "<INVALID COMMAND>" << std::endl;
+      return ;
+    }
+    auto temp = getBookmark(bookmark);
+    Record record({number, name});
+    if (order == "after")
+      phonebook_.insert(temp->getCurrentElement(), record, true);
+    else
+      phonebook_.insert(temp->getCurrentElement(), record, false);
+    }
 }
 
 void Handler::show(std::ostream &os, std::string &name)
@@ -149,7 +160,7 @@ void Handler::show(std::ostream &os, std::string &name)
   else
   {
       if (!this->checkBookmark(name))
-          os << "<INVALID COMMAND>" << std::endl;
+          os << "<INVALID BOOKMARK>" << std::endl;
       else
         os << this->getBookmark(name)->getCurrentElement()->getNumber() << ' ' 
             << this->getBookmark(name)->getCurrentElement()->getName() << std::endl;
@@ -158,19 +169,28 @@ void Handler::show(std::ostream &os, std::string &name)
 
 void Handler::deleteBookmark(std::ostream &os, std::string &name)
 {
-    if (!this->checkBookmark(name))
-    {
-      os << "<INVALID COMMAND>" << std::endl;
-      return; 
-    }else
-    {
-    auto temp = getBookmark(name);
-    auto temp2 = temp->getCurrentElement();
+  if (!this->checkBookmark(name))
+  {
+    os << "<INVALID COMMAND>" << std::endl;
+    return; 
+  }else
+  {
+  auto temp = getBookmark(name);
+  auto temp2 = temp->getCurrentElement();
 
-    for (auto elem = bookmarks_.begin(); elem != bookmarks_.end(); elem++)
-        if ( (elem->getCurrentElement() == temp2) && ((std::next(elem->getCurrentElement())) != phonebook_.end()) )
-            elem->shiftElement(1);
+  for (auto elem = bookmarks_.begin(); elem != bookmarks_.end(); elem++)
+    if (elem->getCurrentElement() == temp2)
+    {
+      if ((std::next(elem->getCurrentElement())) != phonebook_.end())
+        elem->shiftElement(1);
+      else
+        elem->shiftElement(-1);
+    };
+  phonebook_.erase(temp2);
+  }    
+}
 
-    phonebook_.erase(temp2);
-    }    
+bool Handler::empty()
+{
+  return bookmarks_.empty();
 }
