@@ -155,10 +155,15 @@ void Handler::insert(std::ostream &os, std::string &bookmark, std::string &numbe
 
 void Handler::show(std::ostream &os, std::string &name)
 {
-  if (this->empty() || phonebook_.empty())
+  if (phonebook_.empty() && name == "current")
+  {
     os << "<EMPTY>" << std::endl;
-  else if (!this->checkBookmark(name))
+    return;
+  }
+  if (!this->checkBookmark(name))
     os << "<INVALID BOOKMARK>" << std::endl;
+  else if (this->empty() || phonebook_.empty())
+    os << "<EMPTY>" << std::endl;
   else
   {
     os << this->getBookmark(name)->getCurrentElement()->getNumber() << ' ' 
