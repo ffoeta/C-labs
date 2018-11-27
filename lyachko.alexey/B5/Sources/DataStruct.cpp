@@ -41,7 +41,7 @@ void readVector(std::vector<DataStruct>& arr, std::istream & is)
 
 bool DataStruct::operator<(const DataStruct &rhs) const
 {
-  if (rhs.key1 < key1)
+  if (rhs.key1 > key1)
   {
     return true;
   }
@@ -55,7 +55,7 @@ bool DataStruct::operator<(const DataStruct &rhs) const
       }
       return (rhs.str.size() < str.size());
     }
-    return (rhs.key2 < key2);
+    return (rhs.key2 > key2);
   }
   return false;
 }
