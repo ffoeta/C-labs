@@ -39,26 +39,27 @@ void readVector(std::vector<DataStruct>& arr, std::istream & is)
 }
 
 
-bool DataStruct::operator<(const DataStruct &rhs) const
+bool DataStruct::operator<(const DataStruct & elem) const
 {
-  if (rhs.key1 > key1)
+  if (key1 < elem.key1) 
   {
     return true;
   }
-  if (rhs.key1 == key1)
+  if (key1 == elem.key1) 
   {
-    if (rhs.key2 == key2)
+    if (key2 == elem.key2) 
     {
-      if (rhs.str.size() == str.size())
+      if (str.size() == elem.str.size()) 
       {
-        return (rhs.str < str);
+        return (str < elem.str);
       }
-      return (rhs.str.size() < str.size());
+      return (str.size() < elem.str.size());
     }
-    return (rhs.key2 > key2);
+    return (key2 < elem.key2);
   }
   return false;
 }
+
 
 void sortVector(std::vector<DataStruct>& arr)
 {

@@ -10,7 +10,7 @@ struct DataStruct
   int key1;
   int key2;
   std::string str;
-  bool operator<(const DataStruct &rhs) const;
+  bool operator<(const DataStruct & elem) const;
 };
 
 void readVector(std::vector<DataStruct> & arr, std::istream &is);
