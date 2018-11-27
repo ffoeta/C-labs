@@ -1,6 +1,6 @@
 #include "../Headers/TaskTwo.hpp"
 
-void taskTwo()
+void TaskTwo()
 {
   ContainerOfFactorials container;
 

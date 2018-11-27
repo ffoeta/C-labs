@@ -1,10 +1,10 @@
 #ifndef TASKTWO_HPP
 #define TASKTWO_HPP
 
+#include "Container.hpp"
 #include <iostream>
 #include <algorithm>
-#include "./Container.hpp"
 
-void taskTwo();
+void TaskTwo();
 
 #endif

@@ -1,123 +1,46 @@
 #include "../Headers/PhoneBook.hpp"
 
-PhoneBook::PhoneBook()
+PhoneBook::iterator PhoneBook::begin()
 {
-  std::list<Record>::const_iterator current_;
-  std::list<Record> book_;
+  return list_.begin();
 }
 
-std::list<Record>::iterator PhoneBook::get()
+PhoneBook::iterator PhoneBook::end()
 {
-  return current_;
+  return list_.end();
 }
 
-std::list<Record>::iterator PhoneBook::begin()
+PhoneBook::const_iterator PhoneBook::cbegin() const
 {
-  return book_.begin();
+  return list_.cbegin();
 }
 
-std::list<Record>::const_iterator PhoneBook::cbegin()
+PhoneBook::const_iterator PhoneBook::cend() const
 {
-  return book_.cbegin();
+  return list_.cend();
 }
 
-std::list<Record>::iterator PhoneBook::end()
+bool PhoneBook::empty() const
 {
-  return book_.end();
+  return list_.empty();
 }
 
-std::list<Record>::const_iterator PhoneBook::cend()
+void PhoneBook::pushBack(const PhoneBookEntry &element)
 {
-  return book_.cend();
+  list_.push_back(element);
 }
 
-void PhoneBook::next()
+void PhoneBook::insert(const typename ElementsContainer::iterator &pos, const PhoneBookEntry &element)
 {
-  if (current_number_ + 1 >= int(book_.size()))
-    throw std::length_error("Error: \n Record doesn't exist.");
-  std::advance(this->current_,1);
-  current_number_++;
+  list_.insert(pos, element);
 }
 
-void PhoneBook::prev()
+std::size_t PhoneBook::size() const
 {
-  if (current_number_ - 1 < 0)
-    throw std::length_error("Error: \n Record doesn't exist.");
-  std::advance(this->current_,-1);
-  current_number_--;
+  return list_.size();
 }
 
-void PhoneBook::insert(Record record, bool order)
+void PhoneBook::erase(const typename ElementsContainer::iterator &pos)
 {
-  if (book_.empty())
-  {
-    book_.push_back(record);
-    current_ = book_.begin();
-  } else
-  if (order)
-    book_.insert(std::next(current_), record);
-  else
-    book_.insert(current_, record);
+  list_.erase(pos);
 }
-
-void PhoneBook::insert(std::list<Record>::const_iterator it, Record record, bool order)
-{
-  if (book_.empty())
-  {
-    book_.push_back(record);
-    current_ = book_.begin();
-  } else 
-  if (order)
-    book_.insert(std::next(it), record);
-  else 
-    book_.insert(it, record);
-}
-
-void PhoneBook::replace(Record record)
-{
-  this->current_->setNumber(record.getNumber());
-  this->current_->setName(record.getName());
-}
-
-void PhoneBook::push_back(Record record)
-{
-  if (book_.empty())
-  {
-    book_.push_back(record);
-    current_ = book_.begin();
-  } else
-  book_.push_back(record);
-}
-
-void PhoneBook::move(int shift)
-{
-  if ((current_number_ + shift > int(book_.size())) || (current_number_ + shift) < 0)
-    throw std::length_error("Error: \n Record doesn't exist.");
-  std::advance(current_, shift);
-  current_number_ += shift;
-}
-
-int PhoneBook::size()
-{
-  return book_.size();
-}
-
-bool PhoneBook::empty()
-{
-  return book_.empty();
-}
-
-void PhoneBook::erase(std::list<Record>::const_iterator &it)
-{
-  auto temp = book_.begin();
-  for (auto elem = book_.begin(); elem != book_.end(); elem++)
-    if (elem == it)
-    {
-      temp = elem;
-      break;
-    }
-  book_.erase(temp);
-}
-
-  
-

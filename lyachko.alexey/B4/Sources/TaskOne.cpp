@@ -1,70 +1,55 @@
 #include "../Headers/TaskOne.hpp"
 
-std::string divideString(std::string &str)
+void TaskOne()
 {
-  std::string result = "";
-  int count = 0;
-  for (char elem: str)
+  Handler manager;
+  std::string string;
+  while (std::getline(std::cin, string))
   {
-    if (elem == ' ')
-      break;
-    result.push_back(elem);
-    count++;
-  }
-  if ( result.size() == str.size() )
-    str.clear();
-  else
-    str.erase(str.begin(), str.begin() + count + 1);
-  return result;
-}
-
-
-void taskOne(std::istream &is, std::ostream &os)
-{
-
-  PhoneBook book;
-  Handler handler(book);
-
-  std::string line;
-
-  while (is)
-  {
-    std::getline(is,line);
-
-    if (line == "")
-      continue;
-
-    std::string command = divideString(line);
-    
-    if (command == "add")
+    try
     {
-      std::string number = divideString(line);
-      handler.push_back(os, number, line);
-    }else if (command == "store")
-    {
-      std::string bookmark = divideString(line);
-      handler.store(os, bookmark, line);
-    }else if (command == "insert")
-    {
-      std::string order = divideString(line);
-      std::string bookmark = divideString(line);
-      std::string number = divideString(line);
-      handler.insert(os, bookmark, number, line, order);
-    }else if (command == "delete")
-    {
-      handler.deleteBookmark(os, line);
-    }else if (command == "show")
-    {
-      handler.show(os, line);
-    }else if (command == "move")
-    {
-      std::string bookmark = divideString(line);
-      handler.move(os, bookmark, line);
-    }else
-    {
-      os << "<INVALID COMMAND>" << std::endl;
+      std::istringstream input{string};
+      std::string command;
+      input >> command;
+      if (command == "add")
+      {
+        InputHandler::addEntry(input, manager);
+      }
+      else if (command == "insert")
+      {
+        InputHandler::insert(input, manager);
+      }
+      else if (command == "delete")
+      {
+        InputHandler::remove(input, manager);
+      }
+      else if (command == "store")
+      {
+        InputHandler::store(input, manager);
+      }
+      else if (command == "move")
+      {
+       InputHandler::move(input, manager);
+      }
+      else if (command == "show")
+      {
+        try
+        {
+          InputHandler::show(input, manager);
+        }
+        catch (std::invalid_argument &)
+        {
+          std::cout << "<INVALID BOOKMARK>" << std::endl;
+        }
+      }
+      else
+      {
+        throw std::invalid_argument("");
+      }
     }
-
-    line.clear();
+    catch (std::invalid_argument &)
+    {
+      std::cout << "<INVALID COMMAND>" << std::endl;
+    }
   }
 }

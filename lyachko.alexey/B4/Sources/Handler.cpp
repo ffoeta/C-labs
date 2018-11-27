@@ -2,199 +2,173 @@
 
 Handler::Handler()
 {
-  Handler phonebook_;
-  std::list<ElementWrapper> bookmarks_;
+  bookmarks_["current"] = book_.end();
 }
 
-Handler::Handler(PhoneBook & phonebook) :
-  phonebook_(phonebook)
+Handler::Handler(const Handler &rhs)
 {
-  std::list<ElementWrapper> bookmarks_;
+  *this = rhs;
 }
 
-bool Handler::verifyName(std::string &line)
+Handler &Handler::operator=(const Handler &rhs)
 {
-  if ((line.front() != '\"') || (line.back() != '\"'))
+  if (this != &rhs)
   {
-    return false;
-  }
-  line.erase(std::remove(line.begin(), line.end(), '\\'), line.end());
-  line.erase(0,1);
-  line.pop_back();
-
-  return true;
-}
-
-bool Handler::verifyNumber(std::string &line)
-{
-  if ( (!std::isdigit(line[0])) && (line[0] != '-') && (line[0]!= '+') )
-    return false;
-  if ((line.length() == 1) && !std::isdigit(line[0]))
-    return false;
-  else if ((line.length() == 1) && std::isdigit(line[0]))
-    return true;
-  for (size_t i = 1; i < line.length(); i++)
-    if (!isdigit(line[i]))
-      return false;
-  return true;
-}
-
-bool Handler::checkBookmark(std::string &name) const
-{
-  for (auto elem: bookmarks_)
-  {
-    if (elem.getCurrentName() == name)
-     return true;
-  }
-  return false;
-}
-
-std::list<ElementWrapper>::iterator Handler::getBookmark(std::string &bookmarksName)
-{
-    ElementWrapper temp(bookmarksName);
-    std::list<ElementWrapper>::iterator findIter = std::find(bookmarks_.begin(), bookmarks_.end(), temp);
-    return findIter;
-}
-
-void Handler::move(std::ostream &os, std::string &name, std::string &elementShift)
-{
-  if (phonebook_.empty())
-  {
-    os << "<EMPTY>" << std::endl;
-    return ;
-  }
-  if (this->checkBookmark(name))
-  {
-    if (verifyNumber(elementShift))
+    book_ = rhs.book_;
+    bookmarks_.clear();
+    for (auto bmark : rhs.bookmarks_)
     {
-      auto mark = getBookmark(name);
-      if ( ( (mark->getCurrentNumber() + std::stoi(elementShift)) > phonebook_.size() ) || (mark->getCurrentNumber() + std::stoi(elementShift) < 0) )
-      {
-        os << "<INVALID COMMAND>" << std::endl;
-        return ;
-      }
-      mark->shiftElement(std::stoi(elementShift));
-    } else if ((elementShift == "first") || (elementShift == "last"))
-    {
-        auto mark = getBookmark(name);
-        if (elementShift == "first")
-        {
-            mark->setCurrentElement(phonebook_.cbegin());
-            mark->setCurrentNumber(0);
-        } else if (elementShift == "last")
-        {
-            mark->setCurrentElement(std::next(phonebook_.end(),-1));
-            mark->setCurrentNumber(phonebook_.size()-1);
-        } else
-            os << "<INVALID COMMAND>" << std::endl;
-    } else
-      os << "<INVALID STEP>" << std::endl;
-  } else
-    os << "<INVALID COMMAND>" << std::endl;
-}
-
-void Handler::store(std::ostream &os, std::string &cbookmark, std::string &nbookmark)
-{
-  if (this->checkBookmark(cbookmark))
-  {
-    ElementWrapper temp = *getBookmark(cbookmark);
-    temp.setCurrentName(nbookmark);
-    bookmarks_.push_back(temp);
-  } else
-    os << "<INVALID COMMAND>" << std::endl;
-}
-
-void Handler::push_back(std::ostream &os, std::string &number, std::string &name)
-{
-  if (verifyNumber(number) && (verifyName(name)))
-  {
-    Record record({number, name});
-    if (phonebook_.empty())
-    {
-      phonebook_.push_back(record);
-      ElementWrapper current("current");
-      current.setCurrentElement(phonebook_.cbegin());
-      bookmarks_.push_back(current);
-    } else
-    phonebook_.push_back(record);
-  } else
-    os << "<INVALID COMMAND>" << std::endl;
-}
-
-void Handler::insert(std::ostream &os, std::string &bookmark, std::string &number, std::string &name, std::string &order)
-{
-  if (phonebook_.empty())
-  {
-    if ( (!this->verifyName(name)) || (!this->verifyNumber(number)) || 
-      !(bookmark == "current") || ((order != "before") && (order != "after")) )
-    { 
-      os << "<INVALID COMMAND>" << std::endl;
-      return ;
+      std::list<PhoneBookEntry>::const_iterator iter = bmark.second;
+      bookmarks_[bmark.first] = std::next(book_.begin(), std::distance(rhs.book_.cbegin(), iter));
     }
-    Record record({number, name});
-    phonebook_.push_back(record);
-    ElementWrapper current("current");
-    current.setCurrentElement(phonebook_.cbegin());
-    bookmarks_.push_back(current);
-  } else
-  {
-    if ( (!this->verifyName(name)) || (!this->verifyNumber(number)) || 
-        (!this->checkBookmark(bookmark)) || ((order != "before") && (order != "after")) )
-    { 
-      os << "<INVALID COMMAND>" << std::endl;
-      return ;
-    }
-    auto temp = getBookmark(bookmark);
-    Record record({number, name});
-    if (order == "after")
-      phonebook_.insert(temp->getCurrentElement(), record, true);
-    else
-      phonebook_.insert(temp->getCurrentElement(), record, false);
-    }
-}
-
-void Handler::show(std::ostream &os, std::string &name)
-{
-  if (phonebook_.empty() && name == "current")
-  {
-    os << "<EMPTY>" << std::endl;
-    return;
   }
-  if (!this->checkBookmark(name))
-    os << "<INVALID BOOKMARK>" << std::endl;
-  else if (this->empty() || phonebook_.empty())
-    os << "<EMPTY>" << std::endl;
+  return *this;
+}
+
+void Handler::replaceEntry(const std::string &bookmark, const PhoneBookEntry & entry)
+{
+  *(getIterator(bookmark)->second) = entry;
+}
+
+void Handler::show(const std::string &bookmark)
+{
+  auto iter = getIterator(bookmark);
+  if (iter->second == book_.end())
+  {
+    std::cout << "<EMPTY>" << std::endl;
+  }
   else
   {
-    os << this->getBookmark(name)->getCurrentElement()->getNumber() << ' ' 
-        << this->getBookmark(name)->getCurrentElement()->getName() << std::endl;
-  } 
+    std::cout << iter->second->number << " " << iter->second->name << std::endl;
+  }
 }
 
-void Handler::deleteBookmark(std::ostream &os, std::string &name)
+void Handler::push_back(const PhoneBookEntry &entry)
 {
-  if (!this->checkBookmark(name))
+  if (book_.empty())
   {
-    os << "<INVALID COMMAND>" << std::endl;
-    return; 
-  }else
+    book_.pushBack(entry);
+    bookmarks_["current"] = book_.begin();
+  }
+  else
   {
-  auto temp = getBookmark(name);
-  auto temp2 = temp->getCurrentElement();
+    book_.pushBack(entry);
+  }
+}
 
-  for (auto elem = bookmarks_.begin(); elem != bookmarks_.end(); elem++)
-    if (elem->getCurrentElement() == temp2)
+void Handler::store(const std::string &currentBookmark, const std::string &newBookmark)
+{
+  auto iter = getIterator(currentBookmark);
+  if (!bookmarks_.emplace(newBookmark, iter->second).second)
+  {
+    throw std::invalid_argument("This bookmark already exists");
+  }
+}
+
+void Handler::insertBefore(const std::string &bookmark, const PhoneBookEntry & entry)
+{
+  insert(bookmark, entry, false);
+}
+
+void Handler::insertAfter(const std::string &bookmark, const PhoneBookEntry & entry)
+{
+  insert(bookmark, entry, true);
+}
+
+void Handler::insert(const std::string &bookmark, const PhoneBookEntry & entry, const bool after)
+{
+  if (book_.empty())
+  {
+    push_back(entry);
+    return;
+  }
+  auto iter = getIterator(bookmark);
+  if (iter->second != book_.end())
+  {
+    if (!after)
     {
-      if ((std::next(elem->getCurrentElement())) != phonebook_.end())
-        elem->shiftElement(1);
-      else
-        elem->shiftElement(-1);
-    };
-  phonebook_.erase(temp2);
-  }    
+      book_.insert(iter->second, entry);
+    }
+    else
+    {
+      book_.insert(std::next(iter->second), entry);
+    }
+  }
+  else
+  {
+    book_.pushBack(entry);
+  }
 }
 
-bool Handler::empty()
+void Handler::removeEntry(const std::string &bookmark)
 {
-  return bookmarks_.empty();
+  auto iter = getIterator(bookmark);
+  if (book_.empty() || iter->second == book_.end())
+  {
+    throw std::invalid_argument("Removing from empty PhoneBook");
+  }
+  auto current = iter->second;
+  auto next = std::next(current);
+  std::for_each(bookmarks_.begin(), bookmarks_.end(), [&](auto &mark)
+  {
+    if (mark.second == current) {
+      mark.second = next;
+    }
+  });
+  book_.erase(current);
+  std::for_each(bookmarks_.begin(), bookmarks_.end(), [&](auto &mark)
+  {
+    if (mark.second == book_.end()) {
+      mark.second = --book_.end();
+    }
+  });
+}
+
+void Handler::prev(const std::string &bookmark)
+{
+  moveTab(bookmark, -1);
+}
+
+void Handler::next(const std::string &bookmark)
+{
+  moveTab(bookmark, 1);
+}
+
+Handler::bookmark_type::iterator Handler::getIterator(const std::string &bookmark)
+{
+  auto iter = bookmarks_.find(bookmark);
+  if (iter == bookmarks_.end())
+  {
+    throw std::invalid_argument("error");
+  }
+  return iter;
+}
+
+void Handler::moveTab(const std::string &bookmark, const int shift)
+{
+  auto iter = getIterator(bookmark);
+  std::advance(iter->second, shift);
+}
+
+void Handler::moveTab(const std::string &bookmark, const std::string & position)
+{
+  auto iter = getIterator(bookmark);
+  if (position != "first" && position != "last")
+  {
+    std::cout << "<INVALID STEP>" << std::endl;
+    return;
+  }
+  if (book_.empty())
+  {
+    iter->second = book_.end();
+    return;
+  }
+  if (position == "first")
+  {
+    iter->second = book_.begin();
+  }
+  else
+  {
+    iter->second = std::prev(book_.end());
+  }
 }

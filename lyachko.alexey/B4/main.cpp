@@ -1,33 +1,35 @@
+#include <iostream>
 #include "./Headers/TaskOne.hpp"
 #include "./Headers/TaskTwo.hpp"
 
-int main(int argc, char * argv[])
+int main(int args, char *argv[])
 {
-  if (argc < 2)
+  if(args != 2)
   {
-    std::cerr << "Error: \n Too few arguments passed." << std::endl;
-    return 1;
-  }
-  if ( ( atoi(argv[1]) > 2) || (atoi(argv[1]) <= 0 ) )
-  {
-    std::cerr << "Error: \n Wrong arguments passed." << std::endl;
+    std::cerr << "Enter the task number, please [1-2]" << std::endl;;
     return 1;
   }
 
   try
   {
-    if (atoi(argv[1]) == 1)
-      taskOne(std::cin, std::cout);
-    else
-      taskTwo();
-
-  } catch (const std::invalid_argument &err) {
-    std::cerr << err.what() << std::endl;
+    int variant = std::stoi(argv[1]);
+    switch(variant)
+    {
+    case 1:
+      TaskOne();
+      break;
+    case 2:
+      TaskTwo();
+      break;
+    default:
+      std::cerr << "The wrong task number [1-2]" << std::endl;;
+      return 1;
+    }
+  }
+  catch(const std::invalid_argument &e)
+  {
+    std::cerr << e.what();
     return 1;
-  } catch (const std::exception &err) {
-    std::cerr << err.what() << std::endl;
-    return 2;
   }
 
-  return 0;
 }
