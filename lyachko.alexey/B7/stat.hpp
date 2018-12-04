@@ -1,12 +1,12 @@
 #ifndef STAT_HPP
 #define STAT_HPP
 
+#include <iomanip>
 #include <iostream>
 #include <limits>
 
 const auto MAX_INT_VALUE = std::numeric_limits<int>::max();
 const auto MIN_INT_VALUE = std::numeric_limits<int>::min();
-const int  DEFAULT_INT_VALUE = 0;
 
 class Stat
 {
