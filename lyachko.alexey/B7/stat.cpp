@@ -1,7 +1,5 @@
 #include "stat.hpp"
 
-#include <limits>
-
 Stat::Stat() :
   summary_(DEFAULT_INT_VALUE), max_(MIN_INT_VALUE), 
   min_(MAX_INT_VALUE), first_(DEFAULT_INT_VALUE),
