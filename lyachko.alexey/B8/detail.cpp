@@ -1,12 +1,4 @@
 #include "detail.hpp"
-#include <iostream>
-#include <functional>
-#include <algorithm>
-#include <iterator>
-#include <memory>
-#include <sstream>
-#include <locale>
-#include <list>
 #include "Shape.hpp"
 #include "Figures.hpp"
 
@@ -34,7 +26,7 @@ std::unique_ptr<Shape> readShape(const Line &line)
   auto firstChar = std::find_if(type.begin(), type.end(),
     std::bind(std::isalpha<char>, std::placeholders::_1, std::locale()));
 
-  type.erase(type.begin(), firstChar); // remove leading whitespaces
+  type.erase(type.begin(), firstChar); 
   type.erase(std::find_if(firstChar, type.end(),
     std::bind(std::isspace<char>, std::placeholders::_1, std::locale())), type.end()); // and trailing
 

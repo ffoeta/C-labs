@@ -17,6 +17,5 @@ void part1(std::istream &in, std::ostream &out)
   }
 
   std::transform(elemList.begin(), elemList.end(), elemList.begin(), std::bind2nd(std::multiplies<double>(), M_PI));
-
   std::copy(elemList.begin(), elemList.end(), std::ostream_iterator<double>(out, " "));
 }

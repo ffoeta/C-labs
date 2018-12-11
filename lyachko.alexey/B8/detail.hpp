@@ -22,4 +22,4 @@ public:
 
 std::unique_ptr<Shape> readShape(const Line &line);
 
-#endif // DETAIL_HPP
+#endif
