@@ -4,13 +4,8 @@
 #include "part1.hpp"
 #include "part2.hpp"
 #include <iostream>
-#include <functional>
-#include <algorithm>
-#include <iterator>
 #include <memory>
 #include <sstream>
-#include <locale>
-#include <list>
 #include "Shape.hpp"
 
 class Line : public std::string

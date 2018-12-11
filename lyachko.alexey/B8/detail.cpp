@@ -1,6 +1,11 @@
 #include "detail.hpp"
 #include "Shape.hpp"
 #include "Figures.hpp"
+#include <functional>
+#include <algorithm>
+#include <iterator>
+#include <locale>
+#include <list>
 
 bool Line::containNonSpaces()
 {
