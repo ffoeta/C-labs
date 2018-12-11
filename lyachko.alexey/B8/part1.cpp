@@ -1,6 +1,6 @@
 #define _USE_MATH_DEFINES
 
-#include "parts.hpp"
+#include "part1.hpp"
 #include <iostream>
 #include <iterator>
 #include <algorithm>

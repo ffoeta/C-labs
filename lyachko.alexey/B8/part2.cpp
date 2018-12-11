@@ -37,7 +37,6 @@ void part2(std::istream &in, std::ostream &out)
   std::for_each(shape.rbegin(), shape.rend(),
     std::bind(&Shape::draw, std::placeholders::_1, std::ref(out)));
 
-
   out << "Top-Bottom:" << std::endl;
   shape.sort(std::bind(&Shape::isUpper,
     std::bind(&std::unique_ptr<Shape>::get, std::placeholders::_1),
