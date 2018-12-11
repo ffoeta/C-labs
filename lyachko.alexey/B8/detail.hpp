@@ -1,7 +1,8 @@
 #ifndef DETAIL_HPP
 #define DETAIL_HPP
 
-#include "parts.hpp"
+#include "part1.hpp"
+#include "part2.hpp"
 #include <iostream>
 #include <functional>
 #include <algorithm>

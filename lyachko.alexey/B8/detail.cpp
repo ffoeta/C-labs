@@ -12,19 +12,14 @@
 
 bool Line::containNonSpaces()
 {
-  return std::find_if(begin(), end(),
-    [] (char c)
-    {
-      return !std::isspace(c, std::locale());
-    }) != end();
+  return std::find_if(begin(), end(),[] (char c){return !std::isspace(c, std::locale());}) != end();
 }
 
 std::istream& operator>>(std::istream &input, Line &line)
 {
   while (std::getline(input, line)) {
-    if (!line.empty() && line.containNonSpaces()) {
+    if (!line.empty() && line.containNonSpaces())
       break;
-    }
   }
   return input;
 }
